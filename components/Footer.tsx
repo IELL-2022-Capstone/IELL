@@ -23,7 +23,7 @@ export const Footer = () => (
                 spacing={1}
             >
                 <Text color="gray.500" fontSize={"sm"} fontWeight={600}>
-                    SKKU College of Education AI-SW Capston Design Contest
+                    2022 AI-SW Capston Design Contest
                 </Text>
                 <Link href="https://skku.edu">
                     <Text color="gray.500" fontSize={"xs"}>
