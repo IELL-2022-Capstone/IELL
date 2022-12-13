@@ -2,13 +2,32 @@ from fastapi import FastAPI
 import EnglishEssayModel
 from starlette.responses import JSONResponse
 import random
+from pydantic import BaseModel
 
 app = FastAPI()
 
-@app.post("/")
-def get_scores(text):
+class Score(BaseModel):
+    result_id: int
+    full_text: str
+    cohesion:float
+    syntac:float
+    vocabulary:float
+    phraseology:float
+    grammar:float
+    conventions:float
+
+
+class Text(BaseModel):
+    text:str
+    
+@app.get("/") 
+async def root(): 
+    return {"message": "Hello World"} 
+
+@app.post("/predict")
+async def get_scores(text:Text):
     #predict
-    result = EnglishEssayModel.predict(text)
+    result = EnglishEssayModel.predict(text.text)
     result = {
         "result_id" : random.randint(10000000, 99999999),
         "full_text" : text,
@@ -27,7 +46,8 @@ def get_scores(text):
         "grammar" : 3.03,
         "conventions" : 3.08
         }
-    return JSONResponse({
+    returnValue={
         "result" : result,
         "average" : average
-        })
+        }
+    return returnValue
