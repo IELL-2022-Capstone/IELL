@@ -12,23 +12,25 @@ import { RadarAxis, RadarMark } from "../components/RadarChart";
 export default function Home() {
     const [data, setData] = useState([]);
     const [history, setHistory] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        try {
-            const result = axios.get("http://localhost:3000/api/rader");
-            result.then(function (r) {
-                setData(r.data);
-            });
-            const histories = axios.get("http://localhost:3000/api/history");
-            histories.then(function (h) {
-                setHistory(JSON.parse(h.data));
-            });
-        } catch (e) {}
+        const fetchData = async () => {
+            const result = await axios.get("http://localhost:3000/api/rader");
+            setData(result.data);
+            const histories = await axios.get(
+                "http://localhost:3000/api/history"
+            );
+            setHistory(JSON.parse(histories.data));
+            setIsLoading(false);
+        };
+        fetchData();
     }, []);
 
     return (
         <>
             <Header />
-            {data.length > 0  && history.length > 0 ? (
+            {isLoading === false ? (
                 <Box display="grid" gridTemplateAreas={`'i r' 'e h'`}>
                     <Box gridArea="i" minH={200} ml={300}>
                         <Box minH={100} />
