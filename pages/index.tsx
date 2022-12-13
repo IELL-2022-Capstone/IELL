@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react";
 import { Group } from "@visx/group";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { AreaChart } from "../components/AreaChart";
+import { AreaAxis, AreaChart, AreaMark } from "../components/AreaChart";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import History from "../components/History";
@@ -93,18 +93,44 @@ export default function Home() {
                         mb={10}
                         gridArea="e"
                     >
-                        <AreaChart
-                            data={[0.5, 1, 1.5, 5, 2.5, 3]}
-                            color={"orange"}
-                            width={600}
-                            height={300}
-                            margin={{
-                                top: 20,
-                                right: 20,
-                                bottom: 30,
-                                left: 30,
-                            }}
-                        />
+                        <svg width={600} height={300}>
+                            <AreaAxis
+                                width={600}
+                                height={300}
+                                margin={{
+                                    top: 20,
+                                    right: 20,
+                                    bottom: 30,
+                                    left: 30,
+                                }}
+                                data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                                color={"orange"}
+                            />
+                            <AreaMark
+                                width={600}
+                                height={300}
+                                margin={{
+                                    top: 20,
+                                    right: 20,
+                                    bottom: 30,
+                                    left: 30,
+                                }}
+                                data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                                color={"orange"}
+                            />
+                            <AreaMark
+                                width={600}
+                                height={300}
+                                margin={{
+                                    top: 20,
+                                    right: 20,
+                                    bottom: 30,
+                                    left: 30,
+                                }}
+                                data={[0.5, 1, 1.5, 5, 2.5, 3].reverse()}
+                                color={"green"}
+                            />
+                        </svg>
                     </Box>
                     <Box
                         overflowY="scroll"

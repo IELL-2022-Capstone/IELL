@@ -61,7 +61,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
     return (
         <>
             <LinearGradient
-                id="area-gradient"
+                id={`area-gradien-${color}`}
                 from={color}
                 to={color}
                 fromOpacity={1}
@@ -73,7 +73,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
                 y={(d) => (yScale(d) ?? 0) + margin.top}
                 yScale={yScale}
                 strokeWidth={1}
-                fill={"url(#area-gradient)"}
+                fill={`url(#area-gradien-${color})`}
                 curve={curveNatural}
             />
             <LinePath
@@ -99,16 +99,5 @@ export const AreaMark = (props: ChartProps & LineProps) => {
                 );
             })}
         </>
-    );
-};
-
-export const AreaChart = (props: ChartProps & LineProps) => {
-    const { width, height } = props;
-
-    return (
-        <svg width={width} height={height}>
-            <AreaAxis {...props} />
-            <AreaMark {...props} />
-        </svg>
     );
 };
