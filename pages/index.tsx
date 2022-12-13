@@ -55,11 +55,10 @@ export default function Home() {
           justifyContent="center"
           alignContent="center"
           ml={150}
-          mt={10}
           mb={10}
           gridArea="e"
         >
-          <LineChart width={500} height={300} />
+          <LineChart width={500} height={350} />
         </Box>
         <Box overflowY="scroll" gridArea="h" w={600} h={300} mt={10} mr={150}>
           <History {...history} />
