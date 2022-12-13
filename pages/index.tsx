@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { Group } from "@visx/group";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -9,8 +9,16 @@ import History from "../components/History";
 import InputBox from "../components/InputBox";
 import { RadarAxis, RadarMark } from "../components/RadarChart";
 
-const WIDTH = 200;
-const HEIGHT = 170;
+const VALUE = [
+  "Cohesion",
+  "Syntax",
+  "Vocabulary",
+  "Phraseology",
+  "Grammer",
+  "Conventions"
+];
+const AREA_WIDTH = 350;
+const AREA_HEIGHT = 220;
 const COLOR = [
   "GoldenRod",
   "orange",
@@ -26,6 +34,7 @@ const AREA_MARGIN = {
   left: 30
 };
 
+const RADER_LENGTH = 250;
 const RADER_MARGIN = {
   top: 0,
   right: 0,
@@ -64,60 +73,66 @@ export default function Home() {
       <Header />
       {isLoading === false ? (
         <Box display="grid" gridTemplateAreas={`'i r' 'e e'`}>
-          <Box gridArea="i" minH={200} ml={300}>
+          <Box gridArea="i" minH={400} ml={300}>
             <Box minH={100} />
             <InputBox />
           </Box>
           <Box
             mt="90"
-            mr="270"
+            mr="300"
             gridArea="r"
-            minH={150}
             display="flex"
             justifyContent="center"
             alignContent="center"
           >
-            <Box minH={200} />
-            <svg width={300} height={300}>
-              <Group top={150} left={150}>
-                <RadarAxis width={300} height={300} margin={RADER_MARGIN} />
+            <svg width={RADER_LENGTH} height={RADER_LENGTH}>
+              <Group top={RADER_LENGTH / 2} left={RADER_LENGTH / 2}>
+                <RadarAxis
+                  width={RADER_LENGTH}
+                  height={RADER_LENGTH}
+                  margin={RADER_MARGIN}
+                />
                 <RadarMark
                   data={data}
                   color={"orange"}
-                  width={300}
-                  height={300}
+                  width={RADER_LENGTH}
+                  height={RADER_LENGTH}
                   margin={RADER_MARGIN}
                 />
                 <RadarMark
                   data={[3.13, 3.03, 3.24, 3.12, 3.03, 3.08]}
                   color={"blue"}
-                  width={300}
-                  height={300}
+                  width={RADER_LENGTH}
+                  height={RADER_LENGTH}
                   margin={RADER_MARGIN}
                 />
               </Group>
             </svg>
           </Box>
           <Box
+            mt={"20px"}
             display="grid"
-            gridTemplateColumns={"repeat(6,220px)"}
+            gridTemplateColumns={"repeat(3,400px)"}
+            gridGap="50px"
             gridArea="e"
             justifyContent={"center"}
             alignContent={"center"}
-            overflow="scroll"
           >
             <Box>
-              <svg width={WIDTH} height={HEIGHT}>
+              <Text align={"center"} fontWeight="bold">
+                {VALUE[0]}
+              </Text>
+              <svg width={AREA_WIDTH} height={AREA_HEIGHT}>
                 <AreaAxis
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[0]}
                 />
                 <AreaMark
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[0]}
@@ -125,17 +140,20 @@ export default function Home() {
               </svg>
             </Box>
             <Box>
-              <svg width={WIDTH} height={HEIGHT}>
+              <Text align={"center"} fontWeight="bold">
+                {VALUE[1]}
+              </Text>
+              <svg width={AREA_WIDTH} height={AREA_HEIGHT}>
                 <AreaAxis
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[1]}
                 />
                 <AreaMark
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[1]}
@@ -143,17 +161,20 @@ export default function Home() {
               </svg>
             </Box>
             <Box>
-              <svg width={WIDTH} height={HEIGHT}>
+              <Text align={"center"} fontWeight="bold">
+                {VALUE[2]}
+              </Text>
+              <svg width={AREA_WIDTH} height={AREA_HEIGHT}>
                 <AreaAxis
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[2]}
                 />
                 <AreaMark
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[2]}
@@ -161,17 +182,20 @@ export default function Home() {
               </svg>
             </Box>
             <Box>
-              <svg width={WIDTH} height={HEIGHT}>
+              <Text align={"center"} fontWeight="bold">
+                {VALUE[3]}
+              </Text>
+              <svg width={AREA_WIDTH} height={AREA_HEIGHT}>
                 <AreaAxis
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[2]}
                 />
                 <AreaMark
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[3]}
@@ -179,17 +203,20 @@ export default function Home() {
               </svg>
             </Box>
             <Box>
-              <svg width={WIDTH} height={HEIGHT}>
+              <Text align={"center"} fontWeight="bold">
+                {VALUE[4]}
+              </Text>
+              <svg width={AREA_WIDTH} height={AREA_HEIGHT}>
                 <AreaAxis
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[4]}
                 />
                 <AreaMark
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[4]}
@@ -197,17 +224,20 @@ export default function Home() {
               </svg>
             </Box>
             <Box>
-              <svg width={WIDTH} height={HEIGHT}>
+              <Text align={"center"} fontWeight="bold">
+                {VALUE[5]}
+              </Text>
+              <svg width={AREA_WIDTH} height={AREA_HEIGHT}>
                 <AreaAxis
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[5]}
                 />
                 <AreaMark
-                  width={WIDTH}
-                  height={HEIGHT}
+                  width={AREA_WIDTH}
+                  height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
                   data={[0.5, 1, 1.5, 5, 2.5, 3]}
                   color={COLOR[5]}
