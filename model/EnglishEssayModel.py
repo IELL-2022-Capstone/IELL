@@ -128,7 +128,7 @@ def train():
             with torch.no_grad():
                 loss_sum = 0
                 vaild_progress = tqdm.tqdm(valid_dataloader, total=len(valid_dataloader))
-                for inputs, targets in valid_progress:
+                for inputs, targets in vaild_progress:
                     outputs = model(inputs)
                     
                     colwise_loss, loss = loss_fn(outputs, targets)

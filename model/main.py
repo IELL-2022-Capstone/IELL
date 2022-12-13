@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
+
 class Score(BaseModel):
     result_id: int
     full_text: str
@@ -15,7 +16,6 @@ class Score(BaseModel):
     phraseology:float
     grammar:float
     conventions:float
-
 
 class Text(BaseModel):
     text:str
@@ -28,7 +28,7 @@ async def root():
 async def get_scores(text:Text):
     #predict
     result = EnglishEssayModel.predict(text.text)
-    result = {
+    returnValue = {
         "result_id" : random.randint(10000000, 99999999),
         "full_text" : text,
         "cohesion" : result[0],
@@ -37,17 +37,5 @@ async def get_scores(text:Text):
         "phraseology" : result[3],
         "grammar" : result[4],
         "conventions" : result[5]
-        }
-    average = {
-        "cohesion" : 3.13,
-        "syntax" : 3.03,
-        "vocabulary" : 3.24,
-        "phraseology" : 3.12,
-        "grammar" : 3.03,
-        "conventions" : 3.08
-        }
-    returnValue={
-        "result" : result,
-        "average" : average
         }
     return returnValue
