@@ -7,12 +7,9 @@ export default function InputBox() {
     <InputGroup size='md'>
       <Input placeholder="Basic usage" w={500} h={260} />
       <InputRightElement width='4.5rem' display='flex' alignItems='center'>
-        <Button h='1.75rem' size='sm' colorScheme='gray' mt="440" mr="1">Commit</Button>
+        <Button h='1.75rem' size='sm' colorScheme='gray' mt="440" mr="1">Submit</Button>
       </InputRightElement>
     </InputGroup>
-    
-    
-
   )
 }
 
