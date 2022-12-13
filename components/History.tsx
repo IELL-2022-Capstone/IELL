@@ -1,41 +1,74 @@
-import { Card, CardHeader, CardBody, CardFooter, SimpleGrid, Heading, Button, Text } from '@chakra-ui/react'
-
-export default function History(){
-    return (
-        <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))'>
-            <Card>
-                <CardHeader>
-                <Heading size='md'> Customer dashboard</Heading>
-                </CardHeader>
-                <CardBody>
-                <Text>View a summary of all your customers over the last month.</Text>
-                </CardBody>
-                <CardFooter>
-                <Button>View here</Button>
-                </CardFooter>
-            </Card>
-            <Card>
-                <CardHeader>
-                <Heading size='md'> Customer dashboard</Heading>
-                </CardHeader>
-                <CardBody>
-                <Text>View a summary of all your customers over the last month.</Text>
-                </CardBody>
-                <CardFooter>
-                <Button>View here</Button>
-                </CardFooter>
-            </Card>
-            <Card>
-                <CardHeader>
-                <Heading size='md'> Customer dashboard</Heading>
-                </CardHeader>
-                <CardBody>
-                <Text>View a summary of all your customers over the last month.</Text>
-                </CardBody>
-                <CardFooter>
-                <Button>View here</Button>
-                </CardFooter>
-            </Card>
-            </SimpleGrid>
-    )
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  SimpleGrid,
+  Heading,
+  Button,
+  Text
+} from "@chakra-ui/react";
+import RadarChart from "./RadarChart";
+import { useEffect, useState } from "react";
+type Data = [string, ...number[]];
+export default function History(data: any) {
+  return (
+    <SimpleGrid spacing={4} templateColumns="repeat(10000, 400px)">
+      <Card>
+        <CardHeader>
+          <Heading size="md">1/32 </Heading>
+        </CardHeader>
+        <CardBody>
+          <Text>hi</Text>
+        </CardBody>
+        <CardFooter>
+          <Button>View here</Button>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <Heading size="md">1/32 </Heading>
+        </CardHeader>
+        <CardBody>
+          <Text>hi</Text>
+        </CardBody>
+        <CardFooter>
+          <Button>View here</Button>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <Heading size="md">1/32 </Heading>
+        </CardHeader>
+        <CardBody>
+          <Text>hi</Text>
+        </CardBody>
+        <CardFooter>
+          <Button>View here</Button>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <Heading size="md">1/32 </Heading>
+        </CardHeader>
+        <CardBody>
+          <Text>hi</Text>
+        </CardBody>
+        <CardFooter>
+          <Button>View here</Button>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <Heading size="md">1/32 </Heading>
+        </CardHeader>
+        <CardBody>
+          <Text>hi</Text>
+        </CardBody>
+        <CardFooter>
+          <Button>View here</Button>
+        </CardFooter>
+      </Card>
+    </SimpleGrid>
+  );
 }
