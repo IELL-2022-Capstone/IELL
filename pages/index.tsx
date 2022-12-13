@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import History from "../components/History";
 import InputBox from "../components/InputBox";
+import LineChart from "../components/LineChart";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -27,12 +28,13 @@ export default function Home() {
     <>
       <Header />
       <Box display="grid" gridTemplateAreas={`'i r' 'e h'`}>
-        <Box gridArea="i" minH={200} ml={50}>
+        <Box gridArea="i" minH={200} ml={300}>
           <Box minH={100} />
           <InputBox />
         </Box>
         <Box
-          mt="100"
+          mt="90"
+          mr="270"
           gridArea="r"
           minH={150}
           display="flex"
@@ -48,8 +50,18 @@ export default function Home() {
             margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
           />
         </Box>
-        <Box gridArea="e" />
-        <Box overflowY="scroll" gridArea="h" h={300} mt={10}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignContent="center"
+          ml={150}
+          mt={10}
+          mb={10}
+          gridArea="e"
+        >
+          <LineChart width={500} height={300} />
+        </Box>
+        <Box overflowY="scroll" gridArea="h" w={600} h={300} mt={10} mr={150}>
           <History {...history} />
         </Box>
       </Box>

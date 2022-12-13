@@ -1293,6 +1293,11 @@
   "resolved" "https://registry.npmjs.org/@types/d3-path/-/d3-path-1.0.9.tgz"
   "version" "1.0.9"
 
+"@types/d3-random@^2.2.0":
+  "integrity" "sha512-5vvxn6//poNeOxt1ZwC7QU//dG9QqABjy1T7fP/xmFHY95GnaOw3yABf29hiu5SR1Oo34XcpyHFbzod+vemQjA=="
+  "resolved" "https://registry.npmjs.org/@types/d3-random/-/d3-random-2.2.1.tgz"
+  "version" "2.2.1"
+
 "@types/d3-scale@^3.3.0":
   "integrity" "sha512-gGqr7x1ost9px3FvIfUMi5XA/F/yAf4UkUDtdQhpH92XCT0Oa7zkkRzY61gPVJq+DxpHn/btouw5ohWkbBsCzQ=="
   "resolved" "https://registry.npmjs.org/@types/d3-scale/-/d3-scale-3.3.2.tgz"
@@ -1409,6 +1414,28 @@
     "@typescript-eslint/types" "5.46.0"
     "eslint-visitor-keys" "^3.3.0"
 
+"@visx/axis@^2.14.0":
+  "integrity" "sha512-/mJuPiAUN/YdatSlXkkXD/8Pb4gVclbucNZkpUk6JVhnrmow0a1x73QiMXKuH2qDO5GDaqQS0C3Ly9lI3qTQ5Q=="
+  "resolved" "https://registry.npmjs.org/@visx/axis/-/axis-2.14.0.tgz"
+  "version" "2.14.0"
+  dependencies:
+    "@types/react" "*"
+    "@visx/group" "2.10.0"
+    "@visx/point" "2.6.0"
+    "@visx/scale" "2.2.2"
+    "@visx/shape" "2.12.2"
+    "@visx/text" "2.12.2"
+    "classnames" "^2.3.1"
+    "prop-types" "^15.6.0"
+
+"@visx/clip-path@2.10.0":
+  "integrity" "sha512-YIUQstsHKGysyDISOV5p+fMymkUdHCs89nSY/w6TG9EIl8x2jRhrQdojwtCYvjLkPZiZiKa8MBT6fFzsSfGImg=="
+  "resolved" "https://registry.npmjs.org/@visx/clip-path/-/clip-path-2.10.0.tgz"
+  "version" "2.10.0"
+  dependencies:
+    "@types/react" "*"
+    "prop-types" "^15.5.10"
+
 "@visx/curve@2.1.0":
   "integrity" "sha512-9b6JOnx91gmOQiSPhUOxdsvcnW88fgqfTPKoVgQxidMsD/I3wksixtwo8TR/vtEz2aHzzsEEhlv1qK7Y3yaSDw=="
   "resolved" "https://registry.npmjs.org/@visx/curve/-/curve-2.1.0.tgz"
@@ -1416,6 +1443,20 @@
   dependencies:
     "@types/d3-shape" "^1.3.1"
     "d3-shape" "^1.0.6"
+
+"@visx/grid@^2.12.2":
+  "integrity" "sha512-lyMQvq5afjOh0nRqF0OBjgsLfsgUeLcFc95oj0FJ/NJ/MvtI6Gd5BxxbmYzuVfZ4f0Dm1pvtBu1swoB3451tkg=="
+  "resolved" "https://registry.npmjs.org/@visx/grid/-/grid-2.12.2.tgz"
+  "version" "2.12.2"
+  dependencies:
+    "@types/react" "*"
+    "@visx/curve" "2.1.0"
+    "@visx/group" "2.10.0"
+    "@visx/point" "2.6.0"
+    "@visx/scale" "2.2.2"
+    "@visx/shape" "2.12.2"
+    "classnames" "^2.3.1"
+    "prop-types" "^15.6.2"
 
 "@visx/group@^2.10.0", "@visx/group@2.10.0":
   "integrity" "sha512-DNJDX71f65Et1+UgQvYlZbE66owYUAfcxTkC96Db6TnxV221VKI3T5l23UWbnMzwFBP9dR3PWUjjqhhF12N5pA=="
@@ -1426,7 +1467,15 @@
     "classnames" "^2.3.1"
     "prop-types" "^15.6.2"
 
-"@visx/point@^2.6.0":
+"@visx/mock-data@^2.15.1":
+  "integrity" "sha512-H9NQk7vH1PwnVUvcSqz6xO7XB98SfqI8jALTL6XZudEigrxV6TxK8gTJ3b/O0Baq6X8i3JockgVNsZcnWZ+Luw=="
+  "resolved" "https://registry.npmjs.org/@visx/mock-data/-/mock-data-2.15.1.tgz"
+  "version" "2.15.1"
+  dependencies:
+    "@types/d3-random" "^2.2.0"
+    "d3-random" "^2.2.2"
+
+"@visx/point@^2.6.0", "@visx/point@2.6.0":
   "integrity" "sha512-amBi7yMz4S2VSchlPdliznN41TuES64506ySI22DeKQ+mc1s1+BudlpnY90sM1EIw4xnqbKmrghTTGfy6SVqvQ=="
   "resolved" "https://registry.npmjs.org/@visx/point/-/point-2.6.0.tgz"
   "version" "2.6.0"
@@ -1443,7 +1492,7 @@
     "d3-scale" "^3.3.0"
     "d3-time" "^2.1.1"
 
-"@visx/shape@^2.12.2":
+"@visx/shape@^2.12.2", "@visx/shape@2.12.2":
   "integrity" "sha512-4gN0fyHWYXiJ+Ck8VAazXX0i8TOnLJvOc5jZBnaJDVxgnSIfCjJn0+Nsy96l9Dy/bCMTh4DBYUBv9k+YICBUOA=="
   "resolved" "https://registry.npmjs.org/@visx/shape/-/shape-2.12.2.tgz"
   "version" "2.12.2"
@@ -1459,6 +1508,29 @@
     "d3-path" "^1.0.5"
     "d3-shape" "^1.2.0"
     "lodash" "^4.17.21"
+    "prop-types" "^15.5.10"
+
+"@visx/text@2.12.2":
+  "integrity" "sha512-Sv9YEolggfv2Nf6+l28ESG3VXVR1+s4u/Cz17QpgOxygcbOM8LfLtriWtBsBMKdMbYKeUpoUro0clx55TUwzew=="
+  "resolved" "https://registry.npmjs.org/@visx/text/-/text-2.12.2.tgz"
+  "version" "2.12.2"
+  dependencies:
+    "@types/lodash" "^4.14.172"
+    "@types/react" "*"
+    "classnames" "^2.3.1"
+    "lodash" "^4.17.21"
+    "prop-types" "^15.7.2"
+    "reduce-css-calc" "^1.3.0"
+
+"@visx/threshold@^2.12.2":
+  "integrity" "sha512-Wg33MK8t8m12SRO4W3U6pKmVK7mnIcA8EshmlS8vL/VvKBcyOyw1/7FHmBAdSvyfh4zXAmj5WtG0G8lp5TwkYw=="
+  "resolved" "https://registry.npmjs.org/@visx/threshold/-/threshold-2.12.2.tgz"
+  "version" "2.12.2"
+  dependencies:
+    "@types/react" "*"
+    "@visx/clip-path" "2.10.0"
+    "@visx/shape" "2.12.2"
+    "classnames" "^2.3.1"
     "prop-types" "^15.5.10"
 
 "@zag-js/element-size@0.1.0":
@@ -1614,6 +1686,11 @@
     "@babel/runtime" "^7.12.5"
     "cosmiconfig" "^7.0.0"
     "resolve" "^1.19.0"
+
+"balanced-match@^0.4.2":
+  "integrity" "sha512-STw03mQKnGUYtoNjmowo4F2cRmIIxYEGiMsjjwla/u5P1lxadj/05WkNaFjNiKTgJkj8KiXbgAiRTmcQRwQNtg=="
+  "resolved" "https://registry.npmjs.org/balanced-match/-/balanced-match-0.4.2.tgz"
+  "version" "0.4.2"
 
 "balanced-match@^1.0.0":
   "integrity" "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw=="
@@ -1813,6 +1890,11 @@
   "integrity" "sha512-VLaYcn81dtHVTjEHd8B+pbe9yHWpXKZUC87PzoFmsFrJqgFwDe/qxfp5MlfsfM1V5E/iVt0MmEbWQ7FVIXh/bg=="
   "resolved" "https://registry.npmjs.org/d3-path/-/d3-path-1.0.9.tgz"
   "version" "1.0.9"
+
+"d3-random@^2.2.2":
+  "integrity" "sha512-0D9P8TRj6qDAtHhRQn6EfdOtHMfsUWanl3yb/84C4DqpZ+VsgfI5iTVRNRbELCfNvRfpMr8OrqqUTQ6ANGCijw=="
+  "resolved" "https://registry.npmjs.org/d3-random/-/d3-random-2.2.2.tgz"
+  "version" "2.2.2"
 
 "d3-scale@^3.3.0":
   "integrity" "sha512-1JGp44NQCt5d1g+Yy+GeOnZP7xHo0ii8zsQp6PGzd+C1/dl0KGsp9A7Mxwp+1D1o4unbTTxVdU/ZOIEBoeZPbQ=="
@@ -2834,6 +2916,11 @@
   dependencies:
     "yallist" "^4.0.0"
 
+"math-expression-evaluator@^1.2.14":
+  "integrity" "sha512-4vRUvPyxdO8cWULGTh9dZWL2tZK6LDBvj+OGHBER7poH9Qdt7kXEoj20wiz4lQUbUXQZFjPbe5mVDo9nutizCw=="
+  "resolved" "https://registry.npmjs.org/math-expression-evaluator/-/math-expression-evaluator-1.4.0.tgz"
+  "version" "1.4.0"
+
 "merge2@^1.3.0", "merge2@^1.4.1":
   "integrity" "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg=="
   "resolved" "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz"
@@ -3089,7 +3176,7 @@
   "resolved" "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.2.1.tgz"
   "version" "1.2.1"
 
-"prop-types@^15.5.10", "prop-types@^15.6.2", "prop-types@^15.8.1":
+"prop-types@^15.5.10", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -3196,6 +3283,22 @@
   "version" "0.7.6"
   dependencies:
     "hamt_plus" "1.0.2"
+
+"reduce-css-calc@^1.3.0":
+  "integrity" "sha512-0dVfwYVOlf/LBA2ec4OwQ6p3X9mYxn/wOl2xTcLwjnPYrkgEfPx3VI4eGCH3rQLlPISG5v9I9bkZosKsNRTRKA=="
+  "resolved" "https://registry.npmjs.org/reduce-css-calc/-/reduce-css-calc-1.3.0.tgz"
+  "version" "1.3.0"
+  dependencies:
+    "balanced-match" "^0.4.2"
+    "math-expression-evaluator" "^1.2.14"
+    "reduce-function-call" "^1.0.1"
+
+"reduce-function-call@^1.0.1":
+  "integrity" "sha512-Hl/tuV2VDgWgCSEeWMLwxLZqX7OK59eU1guxXsRKTAyeYimivsKdtcV4fu3r710tpG5GmDKDhQ0HSZLExnNmyQ=="
+  "resolved" "https://registry.npmjs.org/reduce-function-call/-/reduce-function-call-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "balanced-match" "^1.0.0"
 
 "regenerator-runtime@^0.13.11":
   "integrity" "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg=="
