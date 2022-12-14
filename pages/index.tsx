@@ -5,12 +5,9 @@ import {
   Grid,
   GridItem,
   Heading,
-  SimpleGrid,
-  Stack,
-  Text
+  SimpleGrid
 } from "@chakra-ui/react";
 import { Group } from "@visx/group";
-import { Line } from "@visx/shape";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AreaAxis, AreaMark } from "../components/AreaChart";
@@ -21,32 +18,16 @@ import { RadarAxis, RadarMark } from "../components/RadarChart";
 import { useRecoilState } from "recoil";
 import { historyState, inputState, valueState } from "../recoil/index";
 import { schemeCategory10 as COLOR } from "d3-scale-chromatic";
-import Head from "next/head";
 import { ScaleSVG } from "@visx/responsive";
-
-const VALUE = [
-  "Cohesion",
-  "Syntax",
-  "Vocabulary",
-  "Phraseology",
-  "Grammer",
-  "Conventions"
-];
-const AREA_WIDTH = 350;
-const AREA_HEIGHT = 220;
-const AREA_MARGIN = {
-  top: 20,
-  right: 20,
-  bottom: 40,
-  left: 30
-};
-const RADER_LENGTH = 250;
-const RADER_MARGIN = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0
-};
+import {
+  AREA_HEIGHT,
+  AREA_MARGIN,
+  AREA_WIDTH,
+  RADER_LENGTH,
+  RADER_MARGIN,
+  VALUE
+} from "../config";
+import Text from "@visx/text/lib/Text";
 
 export default function Home() {
   const [data, setData] = useState<number[]>([]);
@@ -58,13 +39,18 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       if (input) {
-        console.log("text", input);
         const text = {
           text: input
         };
         const predict = (
           await axios.post("http://127.0.0.1:8000/predict", text)
         ).data;
+        predict.conventions = predict.conventions < 0 ? 0 : predict.conventions;
+        predict.syntax = predict.syntax < 0 ? 0 : predict.syntax;
+        predict.vocabulary = predict.vocabulary < 0 ? 0 : predict.vocabulary;
+        predict.phraseology = predict.phraseology < 0 ? 0 : predict.phraseology;
+        predict.grammar = predict.grammar < 0 ? 0 : predict.grammar;
+        predict.conventions = predict.conventions < 0 ? 0 : predict.conventions;
         const predictData: number[] = [
           predict.conventions,
           predict.syntax,
@@ -74,7 +60,7 @@ export default function Home() {
           predict.conventions
         ];
         const newHistory = {
-          text: [...history.text, predict.text],
+          full_text: [...history.full_text, predict.full_text.text],
           cohesion: [...history.conventions, predict.conventions],
           syntax: [...history.syntax, predict.syntax],
           vocabulary: [...history.vocabulary, predict.vocabulary],
@@ -91,44 +77,6 @@ export default function Home() {
     };
     fetchData();
   }, [input]);
-
-  // return (
-  //     <>
-  //         <Header />
-  //         {isLoading === false ? (
-  //             <Box display="grid" gridTemplateAreas={`'i r' 'e e'`}>
-  //                 <Box gridArea="i" minH={400} ml={300}>
-  //                     <Box minH={100} />
-  //
-  //                 </Box>
-  //                 <Box mt="90" mr="300" gridArea="r" display="flex" justifyContent="center" alignContent="center">
-
-  //                 </Box>
-  //                 <Box mt={"20px"} display="grid" gridTemplateColumns={"repeat(3,400px)"} gridGap="50px" gridArea="e" justifyContent={"center"} alignContent={"center"}>
-  //
-  //                         {/* {tooltipOver ? (
-  //             <TooltipWithBounds
-  //               key={Math.random()}
-  //               // top={tooltipTop}
-  //               // left={tooltipLeft}
-  //               // style={tooltipStyles}
-  //               top={0}
-  //               left={0}
-  //               style={tooltipStyles}
-  //             >
-  //               <p>{`Total Spend: $${getRD(tooltipOver[1])}`}</p>
-  //               <p>{`Renewable Spend: $${getRD(tooltipOver[0])}`}</p>
-  //               <p>{`Year: ${getDate(tooltipOver[1])}`}</p>
-  //             </TooltipWithBounds>
-  //           ) : null} */}
-
-  //                 </Box>
-  //             </Box>
-  //         ) : null}
-
-  //         <Footer />
-  //     </>
-  // )
 
   return (
     <>
@@ -181,10 +129,16 @@ export default function Home() {
             </Heading>
             <SimpleGrid w="full" columns={4} spacing={4}>
               <Box>
-                <Text align={"center"} fontWeight="bold">
-                  {VALUE[0]}
-                </Text>
                 <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    textAnchor="middle"
+                    x={AREA_WIDTH / 2}
+                    y={3}
+                    verticalAnchor="start"
+                    fontWeight="bold"
+                  >
+                    {VALUE[0]}
+                  </Text>
                   <AreaAxis
                     width={AREA_WIDTH}
                     height={AREA_HEIGHT}
@@ -202,10 +156,16 @@ export default function Home() {
                 </ScaleSVG>
               </Box>
               <Box>
-                <Text align={"center"} fontWeight="bold">
-                  {VALUE[1]}
-                </Text>
                 <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    textAnchor="middle"
+                    y={3}
+                    x={AREA_WIDTH / 2}
+                    verticalAnchor="start"
+                    fontWeight="bold"
+                  >
+                    {VALUE[1]}
+                  </Text>
                   <AreaAxis
                     width={AREA_WIDTH}
                     height={AREA_HEIGHT}
@@ -223,10 +183,16 @@ export default function Home() {
                 </ScaleSVG>
               </Box>
               <Box>
-                <Text align={"center"} fontWeight="bold">
-                  {VALUE[2]}
-                </Text>
                 <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    textAnchor="middle"
+                    x={AREA_WIDTH / 2}
+                    y={3}
+                    verticalAnchor="start"
+                    fontWeight="bold"
+                  >
+                    {VALUE[2]}
+                  </Text>
                   <AreaAxis
                     width={AREA_WIDTH}
                     height={AREA_HEIGHT}
@@ -244,10 +210,16 @@ export default function Home() {
                 </ScaleSVG>
               </Box>
               <Box>
-                <Text align={"center"} fontWeight="bold">
-                  {VALUE[3]}
-                </Text>
                 <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    textAnchor="middle"
+                    x={AREA_WIDTH / 2}
+                    y={3}
+                    verticalAnchor="start"
+                    fontWeight="bold"
+                  >
+                    {VALUE[3]}
+                  </Text>
                   <AreaAxis
                     width={AREA_WIDTH}
                     height={AREA_HEIGHT}
@@ -265,10 +237,16 @@ export default function Home() {
                 </ScaleSVG>
               </Box>
               <Box>
-                <Text align={"center"} fontWeight="bold">
-                  {VALUE[4]}
-                </Text>
                 <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    verticalAnchor="start"
+                    textAnchor="middle"
+                    x={AREA_WIDTH / 2}
+                    y={3}
+                    fontWeight="bold"
+                  >
+                    {VALUE[4]}
+                  </Text>
                   <AreaAxis
                     width={AREA_WIDTH}
                     height={AREA_HEIGHT}
@@ -286,10 +264,16 @@ export default function Home() {
                 </ScaleSVG>
               </Box>
               <Box>
-                <Text align={"center"} fontWeight="bold">
-                  {VALUE[5]}
-                </Text>
                 <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    verticalAnchor="start"
+                    y={3}
+                    textAnchor="middle"
+                    x={AREA_WIDTH / 2}
+                    fontWeight="bold"
+                  >
+                    {VALUE[5]}
+                  </Text>
                   <AreaAxis
                     width={AREA_WIDTH}
                     height={AREA_HEIGHT}

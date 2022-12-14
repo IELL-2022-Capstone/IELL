@@ -15,7 +15,6 @@ import { ChartProps, LineProps } from "../types";
 
 export const AreaAxis = (props: ChartProps & LineProps) => {
   const { width, height, margin, data } = props;
-  console.log(data);
 
   const xScale = scaleLinear({
     domain: [0, data.length - 1],
@@ -61,7 +60,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
   const { data, width, height, margin, color } = props;
 
   const handleOnclick = (i: number, x: number, y: number, d: number) => {
-    setValue(history.text[i]);
+    setValue(history.full_text[i]);
   };
   const handleOnMouseOver = (id: number) => {
     setTooltipOver(true);
@@ -131,20 +130,17 @@ export const AreaMark = (props: ChartProps & LineProps) => {
       {data.map((d, i) => {
         const x = (xScale(i) ?? 0) + margin.left;
         const y = (yScale(d) ?? 0) + margin.top;
-        console.log(d);
-
         return (
           <>
             {currentId == i && (
-              <svg overflow="visible">
+              <svg key={`Svg${i}`} overflow="visible">
                 <rect
-                  key={`Box${i}`}
                   fill="lightGray"
                   x={x - 30}
                   y={y - 40}
                   width="60px"
                   height="30px"
-                  fill-opacity="0.7"
+                  fillOpacity="0.7"
                   rx="5px"
                 />
                 <text x={x - 12} y={y - 19} fill="black">
