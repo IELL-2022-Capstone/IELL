@@ -164,9 +164,12 @@ def train():
     
     #torch.save(model.state_dict(), "trained_weights.pth")
 
-def predict(text):
+def load_model():
     model = DeBERTaClass()
     model.load_state_dict(torch.load("checkpoint_2_5.pth", map_location=torch.device('cpu')))
+    return model
+
+def predict(text, model):
     text = preprocessing([text])
     tokenized = tokenize_text(text)
 
