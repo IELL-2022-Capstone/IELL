@@ -20,6 +20,14 @@ import { useRecoilState } from "recoil";
 import { historyState, inputState, valueState } from "../recoil/index";
 import { schemeCategory10 as COLOR } from "d3-scale-chromatic";
 import { ScaleSVG } from "@visx/responsive";
+import {
+  AREA_HEIGHT,
+  AREA_MARGIN,
+  AREA_WIDTH,
+  RADER_LENGTH,
+  RADER_MARGIN,
+  VALUE
+} from "../config";
 
 export default function Home() {
   const [data, setData] = useState<number[]>([]);
