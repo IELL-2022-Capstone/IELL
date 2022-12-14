@@ -1,30 +1,44 @@
-import { Input, InputGroup, InputRightElement, Stack, Textarea } from "@chakra-ui/react"
-import { Button } from "@chakra-ui/react"
-import axios from "axios"
-import { useEffect, useRef, useState } from "react"
-import { useRecoilState } from "recoil"
+import { Button, Stack, Textarea } from "@chakra-ui/react";
+import axios from "axios";
+import { useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 
-import { historyState, inputState, valueState } from "../recoil/index"
+import { dataState, historyState } from "../recoil/index";
+import { Instance } from "../types";
 export default function InputBox() {
-    const [value, setValue] = useRecoilState(valueState)
-    const [input, setInput] = useRecoilState(inputState)
+    const [data, setData] = useRecoilState(dataState);
+    const [history, setHistory] = useRecoilState(historyState);
+    const [text, setText] = useState<string>("");
 
-    const ref = useRef(null)
-    const handleClick = () => {
-        // console.log("onclick", ref.current.value);
-        setInput(ref.current.value)
-    }
-    const handleOnChange = () => {
-        // console.log("onclick", ref.current.value);
-        setValue(ref.current.value)
-    }
+    const fetchData = async (text: string) => {
+        if (text == "") return;
+        const predict: Instance = (
+            await axios.post("http://127.0.0.1:8000/predict", { text })
+        ).data;
+
+        setData(predict);
+        setHistory([...history, predict]);
+    };
 
     return (
         <Stack direction={"column"}>
-            <Textarea minH={350} resize={"none"} fontSize={14} ref={ref} value={value} placeholder="Basic usage" width={"full"} height="full" onChange={handleOnChange} />
-            <Button onClick={handleClick} colorScheme="gray">
+            <Textarea
+                minH={350}
+                resize={"none"}
+                fontSize={14}
+                onChange={(e) => setText(e.target.value)}
+                placeholder="Basic usage"
+                width={"full"}
+                height="full"
+            />
+            <Button
+                onClick={() => {
+                    fetchData;
+                }}
+                colorScheme="gray"
+            >
                 Submit
             </Button>
         </Stack>
-    )
+    );
 }

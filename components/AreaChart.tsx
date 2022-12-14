@@ -60,7 +60,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
   const { data, width, height, margin, color } = props;
 
   const handleOnclick = (i: number, x: number, y: number, d: number) => {
-    setValue(history.full_text[i]);
+    setValue(history[i].fullText);
   };
   const handleOnMouseOver = (id: number) => {
     setTooltipOver(true);

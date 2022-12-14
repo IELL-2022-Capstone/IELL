@@ -2,7 +2,7 @@ import { scaleLinear } from "@visx/scale";
 import { Point } from "@visx/point";
 import { Line, LineRadial } from "@visx/shape";
 import { Group } from "@visx/group";
-import { ChartProps, LineProps, RadarProps } from "../types";
+import { ChartProps, getScores, LineProps, RadarProps } from "../types";
 import { DATA_LENGTH, LEVEL } from "../config";
 
 const genAngles = (length: number) =>
@@ -79,11 +79,13 @@ export const RadarAxis = (props: ChartProps) => {
     );
 };
 
-export const RadarMark = (props: ChartProps & LineProps) => {
-    const { width, height, margin, data, color } = props;
+export const RadarMark = (props: ChartProps & RadarProps) => {
+    const { width, height, margin, color } = props;
     const yMax = height - margin.top - margin.bottom;
     const xMax = width - margin.left - margin.right;
     const radius = Math.min(xMax, yMax) / 2;
+
+    const data = getScores(props.data);
 
     const yScale = scaleLinear<number>({
         domain: [0, LEVEL],

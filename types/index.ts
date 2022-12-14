@@ -1,5 +1,5 @@
 export interface RadarProps {
-  data: number[];
+  data: Instance;
   color: string;
 }
 
@@ -18,3 +18,30 @@ export interface ChartProps {
     left: number;
   };
 }
+
+
+export interface Scores {
+  cohesion: number;
+  conventions: number;
+  syntax: number;
+  vocabulary: number;
+  phraseology: number;
+  grammar: number;
+}
+
+
+
+export type Instance = Scores & {
+  resultId: number;
+  fullText: string;
+}
+
+export const getScores = (instance: Instance): number[] => {
+  const { cohesion, conventions, syntax, vocabulary, phraseology, grammar } = instance;
+  return [ cohesion, conventions, syntax, vocabulary, phraseology, grammar ];
+};
+
+
+export type History = Instance[];
+
+

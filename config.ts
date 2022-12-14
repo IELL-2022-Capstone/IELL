@@ -1,3 +1,5 @@
+import { Instance } from "./types";
+
 export const LEVEL = 5;
 export const DATA_LENGTH = 6;
 export const VALUE = [
@@ -23,3 +25,14 @@ export const RADER_MARGIN = {
   bottom: 0,
   left: 0
 };
+
+export const AVERAGE : Instance = {
+  resultId : -1,
+  fullText : "",
+  cohesion: 3.13,
+  syntax: 3.03,
+  vocabulary: 3.24,
+  phraseology: 3.12,
+  grammar: 3.03,
+  conventions: 3.08
+}
