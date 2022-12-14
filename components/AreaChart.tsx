@@ -115,11 +115,11 @@ export const AreaMark = (props: ChartProps & LineProps) => {
           <Line
             from={{
               x: (xScale(currentId) ?? 0) + margin.left,
-              y: height - margin.bottom - margin.top + 20
+              y: height - margin.bottom
             }}
             to={{
               x: (xScale(currentId) ?? 0) + margin.left,
-              y: yScale(data[currentId]) + 20 //-yScale(5) - margin.top - margin.bottom
+              y: yScale(data[currentId]) + margin.top
             }}
             stroke={"#d9d9d9"}
             strokeWidth={1}
