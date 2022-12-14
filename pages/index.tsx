@@ -1,6 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
 import { Group } from "@visx/group";
-import { Line } from "@visx/shape";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AreaAxis, AreaMark } from "../components/AreaChart";
@@ -8,7 +7,6 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import InputBox from "../components/InputBox";
 import { RadarAxis, RadarMark } from "../components/RadarChart";
-import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
 import { useRecoilState } from "recoil";
 import { historyState, inputState, valueState } from "../recoil/index";
 
@@ -43,19 +41,13 @@ const RADER_MARGIN = {
   bottom: 0,
   left: 0
 };
-const tooltipStyles = {
-  ...defaultStyles,
-  minWidth: 60,
-  backgroundColor: "rgba(0,0,0,0.9)",
-  color: "white"
-};
+
 export default function Home() {
   const [data, setData] = useState<number[]>([]);
   const [history, setHistory] = useRecoilState(historyState);
   const [value, setValue] = useRecoilState(valueState);
   const [input, setInput] = useRecoilState(inputState);
 
-  // const [tooltipOver, setTooltipOver] = useRecoilState(tooltipState);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -165,21 +157,6 @@ export default function Home() {
                   color={COLOR[0]}
                 />
               </svg>
-              {/* {tooltipOver ? (
-                <TooltipWithBounds
-                  key={Math.random()}
-                  // top={tooltipTop}
-                  // left={tooltipLeft}
-                  // style={tooltipStyles}
-                  top={0}
-                  left={0}
-                  style={tooltipStyles}
-                >
-                  <p>{`Total Spend: $${getRD(tooltipOver[1])}`}</p>
-                  <p>{`Renewable Spend: $${getRD(tooltipOver[0])}`}</p>
-                  <p>{`Year: ${getDate(tooltipOver[1])}`}</p>
-                </TooltipWithBounds>
-              ) : null} */}
             </Box>
             <Box>
               <Text align={"center"} fontWeight="bold">
