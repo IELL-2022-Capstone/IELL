@@ -50,7 +50,7 @@ function HistoryAreaChart(history: History, attribute: Attribute) {
           height={AREA_HEIGHT}
           margin={AREA_MARGIN}
           data={
-            attribute !== "average"
+            attribute !== "overall score"
               ? history.map((d) => d[attribute])
               : history.map((d) => mean(getScores(d)))
           }
@@ -61,11 +61,11 @@ function HistoryAreaChart(history: History, attribute: Attribute) {
           height={AREA_HEIGHT}
           margin={AREA_MARGIN}
           data={
-            attribute !== "average"
+            attribute !== "overall score"
               ? history.map((d) => d[attribute])
               : history.map((d) => mean(getScores(d)))
           }
-          color={attribute !== "average" ? COLOR[0] : COLOR[1]}
+          color={attribute !== "overall score" ? COLOR[0] : COLOR[1]}
         />
       </ScaleSVG>
     </Box>
@@ -115,7 +115,7 @@ export default function Home() {
                   fontSize="8px"
                   fill="#7f7f7f"
                 >
-                  ■ Average
+                  ■ Student Score
                 </Text>
                 <Text
                   x="80"
@@ -124,7 +124,7 @@ export default function Home() {
                   fontWeight="bold"
                   fill="#1f77b4"
                 >
-                  ■ My score
+                  ■ My Score
                 </Text>
               </Group>
             </ScaleSVG>
@@ -136,8 +136,15 @@ export default function Home() {
               spacing={4}
             >
               {VALUE.map((v) => HistoryAreaChart(history, v))}
-              <Center bgColor={"gray.100"} m={5} borderRadius={10} p={5}>
-                마우스 올리기랑 마우스 클릭을 해보세요 메롱
+              <Center
+                wordBreak={"keep-all"}
+                bgColor={"gray.100"}
+                m={5}
+                borderRadius={10}
+                p={5}
+              >
+                그래프를 클릭해
+                <br /> 히스토리를 확인하세요!
               </Center>
             </SimpleGrid>
           </GridItem>

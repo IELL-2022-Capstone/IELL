@@ -42,8 +42,8 @@ async def get_scores(text:Text):
     #predict
     result = EnglishEssayModel.predict(text.text, model)
     returnValue = {
-        "result_id" : random.randint(10000000, 99999999),
-        "full_text" : text,
+        "resultId" : random.randint(10000000, 99999999),
+        "fullText" : text,
         "cohesion" : result[0],
         "syntax" : result[1],
         "vocabulary" : result[2],

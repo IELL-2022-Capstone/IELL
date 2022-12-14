@@ -1,10 +1,9 @@
 import { AxisBottom, AxisLeft } from "@visx/axis";
 import { curveNatural } from "@visx/curve";
 import { LinearGradient } from "@visx/gradient";
-import { Group } from "@visx/group";
 import { scaleLinear } from "@visx/scale";
 import { AreaClosed, Bar, Circle, Line, LinePath } from "@visx/shape";
-import { Text } from "@visx/text";
+import { Group } from "@visx/group";
 import { useRecoilState } from "recoil";
 import { LEVEL } from "../config";
 import {
@@ -15,6 +14,7 @@ import {
   valueState
 } from "../recoil/index";
 import { ChartProps, LineProps } from "../types";
+import { Text } from "@visx/text";
 
 export const AreaAxis = (props: ChartProps & LineProps) => {
   const { width, height, margin, data } = props;
@@ -151,7 +151,6 @@ export const AreaMark = (props: ChartProps & LineProps) => {
             opacity={i === currentId && tooltipOver ? 1 : 0}
             onMouseOver={() => handleOnMouseOver(i)}
             onMouseLeave={() => handleOnMouseLeave()}
-            onClick={() => handleOnclick(i)}
           />
           <Bar
             key={`tooltip${i}`}
@@ -163,6 +162,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
             fillOpacity={i === currentId && tooltipOver ? 1 : 0}
             rx={5}
           />
+
           <Text
             x={xScale(currentId) ?? 0}
             y={yScale(data[currentId]) - 25 ?? 0}
