@@ -85,14 +85,15 @@ export const RadarAxis = (props: ChartProps) => {
                     key={`radar-label-${i}`}
                     x={labelPoints[i].x}
                     y={labelPoints[i].y}
-                    fontSize={10}
+                    fontSize={8}
                     textAnchor={
                         i === 0 || i === 3 ? "middle" : i < 3 ? "start" : "end"
                     }
                     verticalAnchor="middle"
-                    fill="black"
+                    fill="gray"
+                    
                 >
-                    {VALUE[i]}
+                    {VALUE[i][0].toUpperCase() + VALUE[i].slice(1)}
                 </Text>
             ))}
         </>
@@ -119,7 +120,7 @@ export const RadarMark = (props: ChartProps & RadarProps) => {
             <polygon
                 points={polygonPoints.pointString}
                 fill={color}
-                fillOpacity={0.3}
+                fillOpacity={0.2}
                 stroke={color}
                 strokeWidth={1}
             />

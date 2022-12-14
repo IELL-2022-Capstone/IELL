@@ -45,3 +45,12 @@ export const getScores = (instance: Instance): number[] => {
 export type History = Instance[];
 
 
+
+export type Attribute =
+    | "cohesion"
+    | "syntax"
+    | "vocabulary"
+    | "phraseology"
+    | "grammar"
+    | "conventions"
+    | "average";

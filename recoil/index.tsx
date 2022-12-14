@@ -37,5 +37,5 @@ export const valueState = atom({
 
 export const currentIdState = atom({
     key: "currentIdState",
-    default: -1,
+    default: 0,
 });

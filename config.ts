@@ -1,15 +1,17 @@
-import { Instance } from "./types";
+import { Attribute, Instance } from "./types";
 
 export const LEVEL = 5;
 export const DATA_LENGTH = 6;
-export const VALUE = [
-  "Cohesion",
-  "Syntax",
-  "Vocabulary",
-  "Phraseology",
-  "Grammer",
-  "Conventions",
-  "Average"
+
+
+export const VALUE: Attribute[] = [
+  "cohesion",
+  "syntax",
+  "vocabulary",
+  "phraseology",
+  "grammar",
+  "conventions",
+  "average"
 ];
 export const AREA_WIDTH = 350;
 export const AREA_HEIGHT = 220;
