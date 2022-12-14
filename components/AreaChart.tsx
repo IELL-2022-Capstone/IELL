@@ -1,4 +1,3 @@
-import { Tooltip } from "@chakra-ui/react";
 import { AxisBottom, AxisLeft } from "@visx/axis";
 import { curveNatural } from "@visx/curve";
 import { LinearGradient } from "@visx/gradient";
@@ -16,7 +15,7 @@ import { ChartProps, LineProps } from "../types";
 
 export const AreaAxis = (props: ChartProps & LineProps) => {
   const { width, height, margin, data } = props;
-  console.log(data)
+  console.log(data);
 
   const xScale = scaleLinear({
     domain: [0, data.length - 1],
@@ -132,33 +131,41 @@ export const AreaMark = (props: ChartProps & LineProps) => {
       {data.map((d, i) => {
         const x = (xScale(i) ?? 0) + margin.left;
         const y = (yScale(d) ?? 0) + margin.top;
-        console.log(d)
+        console.log(d);
 
         return (
-          <Tooltip key={`line-point-${i}`} label={`${d}`} placement="top">
+          <>
+            {currentId == i && (
+              <svg overflow="visible">
+                <rect
+                  key={`Box${i}`}
+                  fill="lightGray"
+                  x={x - 30}
+                  y={y - 40}
+                  width="60px"
+                  height="30px"
+                  fill-opacity="0.7"
+                  rx="5px"
+                />
+                <text x={x - 12} y={y - 19} fill="black">
+                  {data[currentId].toFixed(1)}
+                </text>
+              </svg>
+            )}
             <Circle
+              key={`line${i}`}
               onClick={() => handleOnclick(i, x, y, d)}
               onMouseOver={() => handleOnMouseOver(i)}
-              onMouseLeave={() => handleOnMouseLeave}
+              onMouseLeave={() => handleOnMouseLeave()}
               cx={x}
               cy={y}
               r={4}
               fill={color}
               stroke={color}
             />
-          </Tooltip>
+          </>
         );
       })}
-      {/* {tooltipOver ? (
-        <TooltipWithBounds
-          key={Math.random()}
-          top={(yScale(data[currentId]) ?? 0) + margin.top}
-          left={(xScale(currentId) ?? 0) + margin.left}
-          style={tooltipStyles}
-        >
-          <p>{`data: ${data[currentId]}`}</p>
-        </TooltipWithBounds>
-      ) : null} */}
     </>
   );
 };
