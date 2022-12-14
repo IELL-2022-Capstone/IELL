@@ -8,9 +8,9 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import InputBox from "../components/InputBox";
 import { RadarAxis, RadarMark } from "../components/RadarChart";
-import { TooltipWithBounds, defaultStyles } from "@visx/tooltip";
+import { useTooltip, TooltipWithBounds, defaultStyles } from "@visx/tooltip";
 import { useRecoilState } from "recoil";
-import { historyState, tooltipState } from "../recoil/index";
+import { historyState, inputState, valueState } from "../recoil/index";
 
 const VALUE = [
   "Cohesion",
@@ -52,40 +52,48 @@ const tooltipStyles = {
 export default function Home() {
   const [data, setData] = useState<number[]>([]);
   const [history, setHistory] = useRecoilState(historyState);
-  const [tooltipOver, setTooltipOver] = useRecoilState(tooltipState);
+  const [value, setValue] = useRecoilState(valueState);
+  const [input, setInput] = useRecoilState(inputState);
+
+  // const [tooltipOver, setTooltipOver] = useRecoilState(tooltipState);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const text = {
-        text: "I think that students would benefit from learning at home,because they wont have to change and get up early in the morning to shower and do there hair. taking only classes helps them because at there house they'll be pay more attention. they will be comfortable at home.The hardest part of school is getting ready. you wake up go brush your teeth and go to your closet and look at your cloths. after you think you picked a outfit u go look in the mirror and youll either not like it or you look and see a stain. Then you'll have to change. with the online classes you can wear anything and stay home and you wont need to stress about what to wear.most students usually take showers before school. they either take it before they sleep or when they wake up. some students do both to smell good. that causes them do miss the bus and effects on there lesson time cause they come late to school. when u have online classes u wont need to miss lessons cause you can get everything set up and go take a shower and when u get out your ready to go.when your home your comfortable and you pay attention. it gives then an advantage to be smarter and even pass there classmates on class work. public schools are difficult even if you try. some teacher dont know how to teach it in then way that students understand it. that causes students to fail and they may repeat the class."
-      };
-      const predict = (await axios.post("http://127.0.0.1:8000/predict", text))
-        .data;
-      const predictData: number[] = [
-        predict.conventions,
-        predict.syntax,
-        predict.vocabulary,
-        predict.phraseology,
-        predict.grammar,
-        predict.conventions
-      ];
-      console.log(history);
-      const newHistory = {
-        text: [...history.text, predict.text],
-        cohesion: [...history.conventions, predict.conventions],
-        syntax: [...history.syntax, predict.syntax],
-        vocabulary: [...history.vocabulary, predict.vocabulary],
-        phraseology: [...history.phraseology, predict.phraseology],
-        grammar: [...history.grammar, predict.grammar],
-        conventions: [...history.conventions, predict.conventions]
-      };
-      setData(predictData);
-      setHistory(newHistory);
+      if (input) {
+        // console.log("text", input);
+        const text = {
+          text: input
+        };
+        const predict = (
+          await axios.post("http://127.0.0.1:8000/predict", text)
+        ).data;
+        const predictData: number[] = [
+          predict.conventions,
+          predict.syntax,
+          predict.vocabulary,
+          predict.phraseology,
+          predict.grammar,
+          predict.conventions
+        ];
+        const newHistory = {
+          text: [...history.text, predict.text],
+          cohesion: [...history.conventions, predict.conventions],
+          syntax: [...history.syntax, predict.syntax],
+          vocabulary: [...history.vocabulary, predict.vocabulary],
+          phraseology: [...history.phraseology, predict.phraseology],
+          grammar: [...history.grammar, predict.grammar],
+          conventions: [...history.conventions, predict.conventions]
+        };
+        setData(predictData);
+        setHistory(newHistory);
+        setValue("");
+        setInput("");
+      }
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [input]);
 
   return (
     <>
@@ -155,7 +163,7 @@ export default function Home() {
                   margin={AREA_MARGIN}
                   data={history.cohesion}
                   color={COLOR[0]}
-                />{" "}
+                />
                 {/* {tooltipOver && (
                   <g>
                     <Line
@@ -167,16 +175,18 @@ export default function Home() {
                       strokeDasharray="4,2"
                     />
                   </g>
-                )}{" "} */}
-                {/* <rect
+                )}
+                <rect
                   x={0}
                   y={0}
                   width={innerWidth}
                   height={innerHeight}
                   fill={"transparent"}
-                  onMouseOver={handleTooltip}
+                  onClick={handleTooltip}
+                  onMouseMove={handleTooltip}
+                  onMouseLeave={() => hideTooltip()}
                 /> */}
-              </svg>{" "}
+              </svg>
               {/* {tooltipOver ? (
                 <TooltipWithBounds
                   key={Math.random()}
