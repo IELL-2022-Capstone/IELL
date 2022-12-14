@@ -22,13 +22,13 @@ export const AreaAxis = (props: ChartProps & LineProps) => {
   const xScale = scaleLinear({
     domain: [0, data.length - 1],
     range: [0, width - margin.right - margin.left],
-    nice: true,
+    nice: true
   });
 
   const yScale = scaleLinear({
     domain: [0, LEVEL],
     range: [height - margin.bottom - margin.top, 0],
-    nice: true,
+    nice: true
   });
 
   return (
@@ -40,10 +40,10 @@ export const AreaAxis = (props: ChartProps & LineProps) => {
         tickLabelProps={() => ({
           fill: "gray",
           fontSize: 11,
-          textAnchor: "middle",
+          textAnchor: "middle"
         })}
         tickLineProps={{
-          stroke: "gray",
+          stroke: "gray"
         }}
         top={height - margin.bottom}
         left={margin.left}
@@ -61,10 +61,10 @@ export const AreaAxis = (props: ChartProps & LineProps) => {
           fill: "gray",
           fontSize: 11,
           textAnchor: "end",
-          verticalAnchor: "middle",
+          verticalAnchor: "middle"
         })}
         tickLineProps={{
-          stroke: "gray",
+          stroke: "gray"
         }}
       />
     </>
@@ -81,6 +81,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
 
   const handleOnclick = (i: number) => {
     setCurrentDataState(history[i]);
+    setValue(history[i].fullText);
   };
   const handleOnMouseOver = (id: number) => {
     setTooltipOver(true);
@@ -94,13 +95,13 @@ export const AreaMark = (props: ChartProps & LineProps) => {
   const xScale = scaleLinear({
     domain: [0, data.length - 1],
     range: [0, width - margin.right - margin.left],
-    nice: true,
+    nice: true
   });
 
   const yScale = scaleLinear({
     domain: [0, LEVEL],
     range: [height - margin.bottom - margin.top, 0],
-    nice: true,
+    nice: true
   });
 
   return (
@@ -134,15 +135,19 @@ export const AreaMark = (props: ChartProps & LineProps) => {
           <Line
             key={`tooltipline${i}`}
             from={{
-              x: (xScale(i) ?? 0),
-              y: height - margin.bottom - margin.top,
+              x: xScale(i) ?? 0,
+              y: height - margin.bottom - margin.top
             }}
             to={{
-              x: (xScale(i) ?? 0),
-              y: yScale(data[currentId]),
+              x: xScale(i) ?? 0,
+              y: yScale(data[currentId])
             }}
             stroke={"#d9d9d9"}
-            strokeWidth={i === currentId && tooltipOver ? 2 : (width - margin.left - margin.right) / data.length}
+            strokeWidth={
+              i === currentId && tooltipOver
+                ? 2
+                : (width - margin.left - margin.right) / data.length
+            }
             opacity={i === currentId && tooltipOver ? 1 : 0}
             onMouseOver={() => handleOnMouseOver(i)}
             onMouseLeave={() => handleOnMouseLeave()}

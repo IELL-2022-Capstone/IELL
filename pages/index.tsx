@@ -3,7 +3,13 @@ import {
   Center,
   Container,
   Grid,
+<<<<<<< HEAD
   GridItem, SimpleGrid
+=======
+  GridItem,
+  Heading,
+  SimpleGrid
+>>>>>>> 676b09ea69433d6ddbf02b32f6c9593f2df1db0c
 } from "@chakra-ui/react";
 import { Group } from "@visx/group";
 import { ScaleSVG } from "@visx/responsive";
@@ -25,11 +31,16 @@ import {
   RADER_MARGIN,
   VALUE
 } from "../config";
+<<<<<<< HEAD
 import {
   dataState,
   historyState
 } from "../recoil/index";
 import { Attribute, getScores, History } from "../types";
+=======
+import { dataState, historyState } from "../recoil/index";
+import { Attribute, getScores, History, Instance } from "../types";
+>>>>>>> 676b09ea69433d6ddbf02b32f6c9593f2df1db0c
 
 const mean = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length;
 
@@ -80,7 +91,10 @@ export default function Home() {
 
   return (
     <>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 676b09ea69433d6ddbf02b32f6c9593f2df1db0c
       <Container maxW="container.xl" pt="20" pb="5">
         <Grid
           templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }}
@@ -91,10 +105,7 @@ export default function Home() {
           </GridItem>
           <GridItem w={"full"}>
             <ScaleSVG width={RADAR_WIDTH} height={RADAR_HEIGHT}>
-              <Group
-                top={RADAR_HEIGHT / 2}
-                left={RADAR_WIDTH / 2}
-              >
+              <Group top={RADAR_HEIGHT / 2} left={RADAR_WIDTH / 2}>
                 <RadarAxis
                   width={RADAR_WIDTH}
                   height={RADAR_HEIGHT}
