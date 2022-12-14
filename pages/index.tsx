@@ -1,13 +1,16 @@
 import { Box, Text } from "@chakra-ui/react";
 import { Group } from "@visx/group";
+import { Line } from "@visx/shape";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AreaAxis, AreaMark } from "../components/AreaChart";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
-import History from "../components/History";
 import InputBox from "../components/InputBox";
 import { RadarAxis, RadarMark } from "../components/RadarChart";
+import { TooltipWithBounds, defaultStyles } from "@visx/tooltip";
+import { useRecoilState } from "recoil";
+import { historyState, tooltipState } from "../recoil/index";
 
 const VALUE = [
   "Cohesion",
@@ -33,7 +36,6 @@ const AREA_MARGIN = {
   bottom: 40,
   left: 30
 };
-
 const RADER_LENGTH = 250;
 const RADER_MARGIN = {
   top: 0,
@@ -41,10 +43,16 @@ const RADER_MARGIN = {
   bottom: 0,
   left: 0
 };
-
+const tooltipStyles = {
+  ...defaultStyles,
+  minWidth: 60,
+  backgroundColor: "rgba(0,0,0,0.9)",
+  color: "white"
+};
 export default function Home() {
   const [data, setData] = useState<number[]>([]);
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useRecoilState(historyState);
+  const [tooltipOver, setTooltipOver] = useRecoilState(tooltipState);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -62,7 +70,18 @@ export default function Home() {
         predict.grammar,
         predict.conventions
       ];
+      console.log(history);
+      const newHistory = {
+        text: [...history.text, predict.text],
+        cohesion: [...history.conventions, predict.conventions],
+        syntax: [...history.syntax, predict.syntax],
+        vocabulary: [...history.vocabulary, predict.vocabulary],
+        phraseology: [...history.phraseology, predict.phraseology],
+        grammar: [...history.grammar, predict.grammar],
+        conventions: [...history.conventions, predict.conventions]
+      };
       setData(predictData);
+      setHistory(newHistory);
       setIsLoading(false);
     };
     fetchData();
@@ -134,10 +153,45 @@ export default function Home() {
                   width={AREA_WIDTH}
                   height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
-                  data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                  data={history.cohesion}
                   color={COLOR[0]}
-                />
-              </svg>
+                />{" "}
+                {/* {tooltipOver && (
+                  <g>
+                    <Line
+                      from={{ x: tooltipLeft - margin.left, y: 0 }}
+                      to={{ x: tooltipLeft - margin.left, y: innerHeight }}
+                      stroke={"#EDF2F7"}
+                      strokeWidth={2}
+                      pointerEvents="none"
+                      strokeDasharray="4,2"
+                    />
+                  </g>
+                )}{" "} */}
+                {/* <rect
+                  x={0}
+                  y={0}
+                  width={innerWidth}
+                  height={innerHeight}
+                  fill={"transparent"}
+                  onMouseOver={handleTooltip}
+                /> */}
+              </svg>{" "}
+              {/* {tooltipOver ? (
+                <TooltipWithBounds
+                  key={Math.random()}
+                  // top={tooltipTop}
+                  // left={tooltipLeft}
+                  // style={tooltipStyles}
+                  top={0}
+                  left={0}
+                  style={tooltipStyles}
+                >
+                  <p>{`Total Spend: $${getRD(tooltipOver[1])}`}</p>
+                  <p>{`Renewable Spend: $${getRD(tooltipOver[0])}`}</p>
+                  <p>{`Year: ${getDate(tooltipOver[1])}`}</p>
+                </TooltipWithBounds>
+              ) : null} */}
             </Box>
             <Box>
               <Text align={"center"} fontWeight="bold">
@@ -155,7 +209,7 @@ export default function Home() {
                   width={AREA_WIDTH}
                   height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
-                  data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                  data={history.syntax}
                   color={COLOR[1]}
                 />
               </svg>
@@ -176,7 +230,7 @@ export default function Home() {
                   width={AREA_WIDTH}
                   height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
-                  data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                  data={history.vocabulary}
                   color={COLOR[2]}
                 />
               </svg>
@@ -197,7 +251,7 @@ export default function Home() {
                   width={AREA_WIDTH}
                   height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
-                  data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                  data={history.phraseology}
                   color={COLOR[3]}
                 />
               </svg>
@@ -218,7 +272,7 @@ export default function Home() {
                   width={AREA_WIDTH}
                   height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
-                  data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                  data={history.grammar}
                   color={COLOR[4]}
                 />
               </svg>
@@ -239,7 +293,7 @@ export default function Home() {
                   width={AREA_WIDTH}
                   height={AREA_HEIGHT}
                   margin={AREA_MARGIN}
-                  data={[0.5, 1, 1.5, 5, 2.5, 3]}
+                  data={history.conventions}
                   color={COLOR[5]}
                 />
               </svg>
