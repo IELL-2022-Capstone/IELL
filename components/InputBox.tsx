@@ -25,9 +25,11 @@ export default function InputBox() {
             <Textarea
                 minH={350}
                 resize={"none"}
-                fontSize={14}
+                size="md"
+                fontSize={24}
+                _placeholder={{ fontSize: 24, padding: 4 }}
                 onChange={(e) => setText(e.target.value)}
-                placeholder="Basic usage"
+                placeholder="Write English Paragraph Here!"
                 width={"full"}
                 height="full"
             />

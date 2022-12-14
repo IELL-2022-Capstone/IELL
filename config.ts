@@ -19,12 +19,13 @@ export const AREA_MARGIN = {
   bottom: 40,
   left: 30
 };
-export const RADER_LENGTH = 250;
+export const RADAR_HEIGHT = 200;
+export const RADAR_WIDTH = 300;
 export const RADER_MARGIN = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0
+  top: 20,
+  right: 60,
+  bottom: 20,
+  left: 60
 };
 
 export const AVERAGE : Instance = {

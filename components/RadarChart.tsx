@@ -3,7 +3,8 @@ import { Point } from "@visx/point";
 import { Line, LineRadial } from "@visx/shape";
 import { Group } from "@visx/group";
 import { ChartProps, getScores, LineProps, RadarProps } from "../types";
-import { DATA_LENGTH, LEVEL } from "../config";
+import { DATA_LENGTH, LEVEL, VALUE } from "../config";
+import { Text } from "@visx/text";
 
 const genAngles = (length: number) =>
     [...new Array(length + 1)].map((_, i) => ({
@@ -48,8 +49,12 @@ export const RadarAxis = (props: ChartProps) => {
     const yMax = height - margin.top - margin.bottom;
     const xMax = width - margin.left - margin.right;
     const radius = Math.min(xMax, yMax) / 2;
+    const labelRadius = Math.min(xMax, yMax) / 2 + 10;
+
     const webs = genAngles(DATA_LENGTH);
     const points = genPoints(DATA_LENGTH, radius);
+    const labelPoints = genPoints(DATA_LENGTH, labelRadius);
+
     const zeroPoint = new Point({ x: 0, y: 0 });
 
     return (
@@ -74,6 +79,21 @@ export const RadarAxis = (props: ChartProps) => {
                     to={points[i]}
                     stroke={"#d9d9d9"}
                 />
+            ))}
+            {labelPoints.map((value, i) => (
+                <Text
+                    key={`radar-label-${i}`}
+                    x={labelPoints[i].x}
+                    y={labelPoints[i].y}
+                    fontSize={10}
+                    textAnchor={
+                        i === 0 || i === 3 ? "middle" : i < 3 ? "start" : "end"
+                    }
+                    verticalAnchor="middle"
+                    fill="black"
+                >
+                    {VALUE[i]}
+                </Text>
             ))}
         </>
     );
@@ -115,17 +135,3 @@ export const RadarMark = (props: ChartProps & RadarProps) => {
         </>
     );
 };
-
-// export default function RadarChart(props: RadarProps & ChartProps) {
-//     const { width, height, margin, data } = props;
-//     return width < 10 ? null : (
-//         <svg width={width} height={height}>
-//             <Group top={height / 2} left={width / 2}>
-//                 <RadarAxis {...props} />
-//                 {data.map((d) => (
-//                     <RadarMark key={d} d={d} props={props} />
-//                 ))}
-//             </Group>
-//         </svg>
-//     );
-// }

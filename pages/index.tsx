@@ -1,54 +1,51 @@
 import {
-    Box,
-    Center,
-    Container,
-    Grid,
-    GridItem,
-    Heading,
-    SimpleGrid,
+  Box,
+  Center,
+  Container,
+  Grid,
+  GridItem,
+  Heading,
+  SimpleGrid
 } from "@chakra-ui/react";
 import { Group } from "@visx/group";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { ScaleSVG } from "@visx/responsive";
+import Text from "@visx/text/lib/Text";
+import { schemeCategory10 as COLOR } from "d3-scale-chromatic";
+import { useRecoilState } from "recoil";
 import { AreaAxis, AreaMark } from "../components/AreaChart";
 import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import InputBox from "../components/InputBox";
 import { RadarAxis, RadarMark } from "../components/RadarChart";
-import { useRecoilState } from "recoil";
-import { dataState, historyState, inputState, valueState } from "../recoil/index";
-import { schemeCategory10 as COLOR } from "d3-scale-chromatic";
-import { ScaleSVG } from "@visx/responsive";
 import {
-    AREA_HEIGHT,
-    AREA_MARGIN,
-    AREA_WIDTH,
-    AVERAGE,
-    RADER_LENGTH,
-    RADER_MARGIN,
-    VALUE,
+  AREA_HEIGHT,
+  AREA_MARGIN,
+  AREA_WIDTH,
+  AVERAGE,
+  RADAR_HEIGHT,
+  RADAR_WIDTH,
+  RADER_MARGIN,
+  VALUE
 } from "../config";
-import Text from "@visx/text/lib/Text";
-import { getScores, Instance, Scores } from "../types";
+import { dataState, historyState, inputState, valueState } from "../recoil/index";
+import { getScores } from "../types";
 
 const mean = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length;
 
 export default function Home() {
     const [data, setData] = useRecoilState(dataState);
     const [history, setHistory] = useRecoilState(historyState);
-    const [value, setValue] = useRecoilState(valueState);
-    const [input, setInput] = useRecoilState(inputState);
 
     return (
         <>
             <Header />
-            <Container maxW="container.xl" py="20">
+            <Container maxW="container.xl" pt="20" >
                 <Grid
                     templateRows="repeat(2,1fr)"
-                    templateColumns={"repeat(4,1fr)"}
+                    templateColumns={"repeat(2,1fr)"}
                     gap={4}
                 >
-                    <GridItem w={"full"} colSpan={3}>
+                    <GridItem w={"full"}>
                         <Heading size="lg" mb={4}>
                             English
                         </Heading>
@@ -59,29 +56,28 @@ export default function Home() {
                             Score
                         </Heading>
 
-                        <ScaleSVG width={RADER_LENGTH} height={RADER_LENGTH}>
+                        <ScaleSVG width={RADAR_WIDTH} height={RADAR_HEIGHT}>
                             <Group
-                                top={RADER_LENGTH / 2}
-                                left={RADER_LENGTH / 2}
+                                top={RADAR_HEIGHT / 2}
+                                left={RADAR_WIDTH / 2}
                             >
                                 <RadarAxis
-                                    width={RADER_LENGTH}
-                                    height={RADER_LENGTH}
+                                    width={RADAR_WIDTH}
+                                    height={RADAR_HEIGHT}
                                     margin={RADER_MARGIN}
                                 />
                                 <RadarMark
                                     data={data}
                                     color={"orange"}
-                                    width={RADER_LENGTH}
-                                    height={RADER_LENGTH}
+                                    width={RADAR_WIDTH}
+                                    height={RADAR_HEIGHT}
                                     margin={RADER_MARGIN}
                                 />
                                 <RadarMark
                                     data={AVERAGE}
-                                    //수정해야함 Average는 어디에?
                                     color={"blue"}
-                                    width={RADER_LENGTH}
-                                    height={RADER_LENGTH}
+                                    width={RADAR_WIDTH}
+                                    height={RADAR_HEIGHT}
                                     margin={RADER_MARGIN}
                                 />
                             </Group>
@@ -290,14 +286,18 @@ export default function Home() {
                                         width={AREA_WIDTH}
                                         height={AREA_HEIGHT}
                                         margin={AREA_MARGIN}
-                                        data={history.map((d) => mean(getScores(d)))}
+                                        data={history.map((d) =>
+                                            mean(getScores(d))
+                                        )}
                                         color={COLOR[6]}
                                     />
                                     <AreaMark
                                         width={AREA_WIDTH}
                                         height={AREA_HEIGHT}
                                         margin={AREA_MARGIN}
-                                        data={history.map((d) => mean(getScores(d)))}
+                                        data={history.map((d) =>
+                                            mean(getScores(d))
+                                        )}
                                         color={COLOR[6]}
                                     />
                                 </ScaleSVG>
