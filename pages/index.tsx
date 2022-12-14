@@ -6,9 +6,17 @@ import {
   GridItem,
   Heading,
   SimpleGrid,
+<<<<<<< HEAD
   Text
 } from "@chakra-ui/react";
 import { Group } from "@visx/group";
+=======
+  Stack,
+  Text
+} from "@chakra-ui/react";
+import { Group } from "@visx/group";
+import { Line } from "@visx/shape";
+>>>>>>> 852ed4db95e2c3a0dc2f803890ae5cf276b9ec63
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AreaAxis, AreaMark } from "../components/AreaChart";
@@ -19,6 +27,7 @@ import { RadarAxis, RadarMark } from "../components/RadarChart";
 import { useRecoilState } from "recoil";
 import { historyState, inputState, valueState } from "../recoil/index";
 import { schemeCategory10 as COLOR } from "d3-scale-chromatic";
+<<<<<<< HEAD
 import { ScaleSVG } from "@visx/responsive";
 import {
   AREA_HEIGHT,
@@ -29,6 +38,35 @@ import {
   VALUE
 } from "../config";
 
+=======
+import Head from "next/head";
+import { ScaleSVG } from "@visx/responsive";
+
+const VALUE = [
+  "Cohesion",
+  "Syntax",
+  "Vocabulary",
+  "Phraseology",
+  "Grammer",
+  "Conventions"
+];
+const AREA_WIDTH = 350;
+const AREA_HEIGHT = 220;
+const AREA_MARGIN = {
+  top: 20,
+  right: 20,
+  bottom: 40,
+  left: 30
+};
+const RADER_LENGTH = 250;
+const RADER_MARGIN = {
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0
+};
+
+>>>>>>> 852ed4db95e2c3a0dc2f803890ae5cf276b9ec63
 export default function Home() {
   const [data, setData] = useState<number[]>([]);
   const [history, setHistory] = useRecoilState(historyState);
