@@ -11,7 +11,6 @@ export default function InputBox() {
 
   const fetchData = async (text: string) => {
     if (text == "") return;
-    console.log(text);
     const predict: Instance = (
       await axios.post("http://127.0.0.1:8000/predict", { text })
     ).data;
