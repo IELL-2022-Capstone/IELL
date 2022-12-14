@@ -25,7 +25,8 @@ export default function InputBox() {
         minH={350}
         resize={"none"}
         size="md"
-        fontSize={24}
+        fontSize={16}
+        lineHeight={2}
         value={value}
         _placeholder={{ fontSize: 24, padding: 4 }}
         onChange={(e) => setValue(e.target.value)}

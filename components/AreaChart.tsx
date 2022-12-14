@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { LEVEL } from "../config";
 import {
   currentIdState,
+  dataState,
   historyState,
   tooltipState,
   valueState,
@@ -75,12 +76,11 @@ export const AreaMark = (props: ChartProps & LineProps) => {
   const [currentId, setCurrentId] = useRecoilState(currentIdState);
   const [value, setValue] = useRecoilState(valueState);
   const [history, setHistory] = useRecoilState(historyState);
-
+  const [currentDataState, setCurrentDataState] = useRecoilState(dataState);
   const { data, width, height, margin, color } = props;
-  console.log(data, currentId, tooltipOver)
 
   const handleOnclick = (i: number) => {
-    setValue(history[i].fullText);
+    setCurrentDataState(history[i]);
   };
   const handleOnMouseOver = (id: number) => {
     setTooltipOver(true);
