@@ -1,8 +1,8 @@
 import torch
-from torch.utils.data import Dataset, DataLoader, random_split
+from torch.utils.data import Dataset, DataLoader, random_split, SubsetRandomSampler
 import numpy as np
 import pandas as pd
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModel, AutoConfig
 import re
 import tqdm
 from sklearn.model_selection import KFold
@@ -23,7 +23,6 @@ class EnglishDataset(Dataset):
     def __getitem__(self, index):
         inputs = {
             "input_ids": torch.tensor(self.tokenized[index]["input_ids"], dtype=torch.long, device=device),
-            "token_type_ids": torch.tensor(self.tokenized[index]["token_type_ids"], dtype=torch.long, device=device),
             "attention_mask": torch.tensor(self.tokenized[index]["attention_mask"], dtype=torch.long, device=device)
         }
         targets = torch.tensor(self.y[index], dtype=torch.float32)
@@ -68,19 +67,29 @@ class MeanPooling(torch.nn.Module):
 class DeBERTaClass(torch.nn.Module):
     def __init__(self):
         super().__init__()
-        self.deberta = AutoModel.from_pretrained("microsoft/deberta-v3-base")
+        self.deberta_config = AutoConfig.from_pretrained("microsoft/deberta-v3-base")
+        self.deberta_config.update(
+            {
+                "hidden_dropout": 0.,
+                "hidden_dropout_prob": 0.,
+                "attention_dropout": 0.,
+                "attention_probs_dropout_prob": 0,
+                "add_pooling_layer": False,
+                "output_hidden_states": True,
+            })
+        self.deberta = AutoModel.from_pretrained("microsoft/deberta-v3-base", config=self.deberta_config)
         self.mean_pooling = MeanPooling()
         self.linear = torch.nn.Linear(self.deberta.config.hidden_size, 6)
         
     def forward(self, inputs):
-        deberta_output = self.deberta(**inputs, return_dict=True)
+        deberta_output = self.deberta(**inputs)
         outputs = self.mean_pooling(deberta_output['last_hidden_state'], inputs['attention_mask'])
         outputs = self.linear(outputs)
         return outputs
 
 def RMSE(labels, preds):
-    colwise_rmse = np.sqrt(np.mean((labels - preds) ** 2, axis=1))
-    mean_rmse = np.mean(colwise_rmse)
+    colwise_rmse = torch.sqrt(torch.mean((labels.to(device) - preds.to(device)) ** 2, dim=0)).to(device)
+    mean_rmse = torch.mean(colwise_rmse).to(device)
     return colwise_rmse, mean_rmse
 
 def train():
@@ -88,66 +97,76 @@ def train():
     splits = KFold(n_splits=5, shuffle=True, random_state=42)
 
     #hyperparams
-    epochs = 2
-    lr = 0.001
+    epochs = 10
+    lr = 1e-5
 
     #training
     n_total_steps = len(dataset)
     train_loss = []
-    val_loss = []
+    valid_loss = []
     
-    for fold, (train_dataset, valid_dataset) in enumerate(splits.split(np.arange(len(dataset)))):
+    for fold, (train_index, valid_index) in enumerate(splits.split(np.arange(len(dataset)))):
 
         model = DeBERTaClass().to(device)
 
-        dataloader = DataLoader(train_dataset, batch_size=16)
-        valid_dataloader = DataLoader(valid_dataset, batch_size=16)
+        train_sampler = SubsetRandomSampler(train_index)
+        valid_sampler = SubsetRandomSampler(valid_index)
+
+        dataloader = DataLoader(dataset, batch_size=8, sampler=train_sampler)
+        valid_dataloader = DataLoader(dataset, batch_size=8, sampler=valid_sampler)
         
         # loss, optimizer
-        loss_fn = RMSE
+        loss_fn = torch.nn.SmoothL1Loss(reduction="mean")
         optimizer = torch.optim.AdamW(model.parameters(), lr=lr)
         train_loss.append([])
-        val_loss.append([])
+        valid_loss.append(torch.tensor([0., 0., 0., 0., 0., 0.], device=device))
+        valid_loss_sum = []
         
         for epoch in range(epochs):
             progress = tqdm.tqdm(dataloader, total=len(dataloader))
-            for inputs, targets in progress: 
+            for i, (inputs, targets) in enumerate(progress): 
                 #forward
-                outputs = model(inputs)
-                colwise_loss, loss = loss_fn(outputs, targets)
-                train_loss[fold].append(colwise_loss)  # column wise loss
-                
+                outputs = model(inputs).to(device)
+                loss = loss_fn(outputs, targets.to(device)) # dim=(1, 6), 1
+                train_loss[fold].append(loss)
+                                
                 #backward
                 loss.backward()
                 optimizer.step()
                 optimizer.zero_grad()
 
-            torch.save(model.state_dict(), f"checkpoint_{epoch}.pth")
+                del inputs, targets, outputs, loss
             
             # validate
             with torch.no_grad():
-                loss_sum = 0
-                vaild_progress = tqdm.tqdm(valid_dataloader, total=len(valid_dataloader))
-                for inputs, targets in vaild_progress:
-                    outputs = model(inputs)
+                val_loss_sum = 0
+                valid_progress = tqdm.tqdm(valid_dataloader, total=len(valid_dataloader))
+                for i, (inputs, targets) in enumerate(valid_progress):
+                    outputs = model(inputs).to(device)
                     
-                    colwise_loss, loss = loss_fn(outputs, targets)
-                    val_loss[fold].append(colwise_loss)
+                    colwise_loss, loss = RMSE(outputs, targets) # dim=(1, 6), 1
+                    valid_loss[fold] += colwise_loss
+                    val_loss_sum += loss
                     
                     del inputs, targets, outputs, loss
-                
-            print(f"epoch {epoch+1} / {epochs}, train loss = {train_loss[-1]}")
-            print(f"epoch {epoch+1} / {epochs}, valid loss = {loss_sum / len(valid_dataloader)}")
+
+            print(f"epoch {epoch+1} / {epochs}, train loss = {sum(train_loss[fold]) / (len(dataloader) * (epoch + 1))}")
+            print(f"epoch {epoch+1} / {epochs}, valid loss = {valid_loss[fold] / (len(valid_dataloader) * (epoch + 1))}")
+
+            if ((epoch != 0) and (valid_loss_sum[-1] < val_loss_sum)):
+                break
+            else:
+                valid_loss_sum.append(val_loss_sum)
+                torch.save(model.state_dict(), f"checkpoint_{fold}_{epoch}.pth")
 
         # fold 별 loss
-        print(f"fold: {fold}, train_loss={train_loss[fold]}")
-        print(f"fold: {fold}, val_loss={val_loss[fold]}")
+        print(f"fold: {fold}, train loss={sum(train_loss[fold]) / (len(dataloader) * 2)}, validation loss={valid_loss[fold] / (len(valid_dataloader) * 2)}")
     
     #torch.save(model.state_dict(), "trained_weights.pth")
 
 def predict(text):
     model = DeBERTaClass()
-    #model.load_state_dict("trained_weights.pth")
+    model.load_state_dict(torch.load("checkpoint_2_5.pth", map_location=torch.device('cpu')))
     text = preprocessing([text])
     tokenized = tokenize_text(text)
 
@@ -160,7 +179,7 @@ def predict(text):
 
     return result[0].tolist()
 
-if __name__ == "__main__":
-    torch.multiprocessing.set_start_method('spawn')
+#if __name__ == "__main__":
+    #torch.multiprocessing.set_start_method('spawn')
 
-    train_loss, val_loss = train()
+    #train()
