@@ -3,7 +3,8 @@ import {
   Center,
   Container,
   Grid,
-  GridItem, SimpleGrid
+  GridItem,
+  SimpleGrid
 } from "@chakra-ui/react";
 import { Group } from "@visx/group";
 import { ScaleSVG } from "@visx/responsive";
@@ -25,10 +26,7 @@ import {
   RADER_MARGIN,
   VALUE
 } from "../config";
-import {
-  dataState,
-  historyState
-} from "../recoil/index";
+import { dataState, historyState } from "../recoil/index";
 import { Attribute, getScores, History } from "../types";
 
 const mean = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length;
@@ -105,18 +103,39 @@ export default function Home() {
                 />
                 <RadarMark
                   data={AVERAGE}
-                  color={COLOR[1]}
+                  color={COLOR[7]}
                   width={RADAR_WIDTH}
                   height={RADAR_HEIGHT}
                   margin={RADER_MARGIN}
                 />
+                <Text
+                  x="80"
+                  y="90"
+                  fontWeight="bold"
+                  fontSize="8px"
+                  fill="#7f7f7f"
+                >
+                  ■ Average
+                </Text>
+                <Text
+                  x="80"
+                  y="80"
+                  fontSize="8px"
+                  fontWeight="bold"
+                  fill="#1f77b4"
+                >
+                  ■ My score
+                </Text>
               </Group>
             </ScaleSVG>
           </GridItem>
           <GridItem colSpan={{ base: 1, md: 2 }} w="full">
-            <SimpleGrid w="full" minChildWidth={{ base: 150, md: 240 }} spacing={4}>
+            <SimpleGrid
+              w="full"
+              minChildWidth={{ base: 150, md: 240 }}
+              spacing={4}
+            >
               {VALUE.map((v) => HistoryAreaChart(history, v))}
-
               <Center bgColor={"gray.100"} m={5} borderRadius={10} p={5}>
                 마우스 올리기랑 마우스 클릭을 해보세요 메롱
               </Center>

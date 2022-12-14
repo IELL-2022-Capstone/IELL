@@ -3,15 +3,14 @@ import { Attribute, Instance } from "./types";
 export const LEVEL = 5;
 export const DATA_LENGTH = 6;
 
-
 export const VALUE: Attribute[] = [
+  "average",
   "cohesion",
   "syntax",
   "vocabulary",
   "phraseology",
   "grammar",
-  "conventions",
-  "average"
+  "conventions"
 ];
 export const AREA_WIDTH = 350;
 export const AREA_HEIGHT = 220;
@@ -30,13 +29,13 @@ export const RADER_MARGIN = {
   left: 60
 };
 
-export const AVERAGE : Instance = {
-  resultId : -1,
-  fullText : "",
+export const AVERAGE: Instance = {
+  resultId: -1,
+  fullText: "",
   cohesion: 3.13,
   syntax: 3.03,
   vocabulary: 3.24,
   phraseology: 3.12,
   grammar: 3.03,
   conventions: 3.08
-}
+};
