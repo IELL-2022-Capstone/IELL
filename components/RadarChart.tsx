@@ -90,7 +90,7 @@ export const RadarAxis = (props: ChartProps) => {
           fill="gray"
           fontWeight="bold"
         >
-          {VALUE[i][0].toUpperCase() + VALUE[i].slice(1)}
+          {VALUE[i + 1][0].toUpperCase() + VALUE[i + 1].slice(1)}
         </Text>
       ))}
     </>
