@@ -15,15 +15,34 @@ export const historyState = atom({
       'Secondly,accomplishing your goals makes you want to strive to do more. when you complete something you may think to yourself,"if I did this than what else can i did with my life?". Accomplishing something could make you want to do even more. For example, when you finish such as school then later move out of the house and live on you own,it gives you a sense of you being an independent person and you having the capability to live on you own and also to manage you own life how you want it to be. lastly it gives you the chance to go higher in your career.Finally it give you the opportunity to learn new and useful thing along the way that you may be able to use in your own life. by accomplishing something you can learn how to help you self to accomplish new and better things in you life. For example ,by finishing school you will take all that you learned and you can apply it it some aspect of your life to help you succeed in life. You can also apply it to the job you pursue or even to get a higher education.',
       "Although some may disagree with me and say that inactivity is helpful when trying to accomplish something because it will not cause stress on you ,what this fails to show is that it lets you become a better person in your day to day life. in conclusion always doing is better than doing nothing because it helps you achieve more in you life,makes you feel accomplished in life, and shows that you can always strive to do more in you life."
     ],
-    cohesion: [3.1, 3.5, 4.5, 2.1, 2.4, 5.1, 4.4, , 4.2, 3.5],
+    cohesion: [3.1, 3.5, 4.5, 2.1, 2.4, 5.1, 4.4, 4.3, 4.2, 3.5],
     syntax: [2.5, 2.2, 1.5, 3.0, 5.1, 4.4, 3.8, 3.5, 3.2, 3.3],
     vocabulary: [3.1, 3.5, 4.0, 3.4, 2.5, 1.0, 2.3, 3.8, 3.5, 4.3],
     phraseology: [5.1, 4.5, 3.5, 4.4, 4.5, 2.0, 2.0, 1.3, 2.5, 3.5],
     grammar: [1.1, 1.1, 1.4, 1.9, 2.6, 3.5, 4.6, 4.1, 3.0, 2.1],
-    conventions: [2.1, 1.1, 1.2, 2.5, 3.6, 4.1, 2.7, 3.8, 5.01, 4.4]
+    conventions: [2.1, 1.1, 1.2, 2.5, 3.6, 4.1, 2.7, 3.8, 5.0, 4.4]
   }
 });
-
+const average = (arr: number[]) => arr.reduce((a, b) => a + b, 0) / arr.length;
+export const averageState = selector({
+  key: "averageState",
+  get: ({ get }) => {
+    const history = get(historyState);
+    const array: number[] = [];
+    for (let i = 1; i < history.cohesion.length; i++) {
+      array.push(
+        (history.cohesion[i] +
+          history.syntax[i] +
+          history.vocabulary[i] +
+          history.phraseology[i] +
+          history.grammar[i] +
+          history.conventions[i]) /
+          6
+      );
+    }
+    return array;
+  }
+});
 export const tooltipState = atom({
   key: "tooltipState",
   default: false

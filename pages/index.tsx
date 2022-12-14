@@ -15,8 +15,13 @@ import { Footer } from "../components/Footer";
 import { Header } from "../components/Header";
 import InputBox from "../components/InputBox";
 import { RadarAxis, RadarMark } from "../components/RadarChart";
-import { useRecoilState } from "recoil";
-import { historyState, inputState, valueState } from "../recoil/index";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  historyState,
+  averageState,
+  inputState,
+  valueState
+} from "../recoil/index";
 import { schemeCategory10 as COLOR } from "d3-scale-chromatic";
 import { ScaleSVG } from "@visx/responsive";
 import {
@@ -35,7 +40,7 @@ export default function Home() {
   const [value, setValue] = useRecoilState(valueState);
   const [input, setInput] = useRecoilState(inputState);
   const [isLoading, setIsLoading] = useState(true);
-
+  const average = useRecoilValue(averageState);
   useEffect(() => {
     const fetchData = async () => {
       if (input) {
@@ -106,16 +111,17 @@ export default function Home() {
                   height={RADER_LENGTH}
                   margin={RADER_MARGIN}
                 />
+
                 <RadarMark
-                  data={data}
-                  color={"orange"}
+                  data={[3.13, 3.03, 3.24, 3.12, 3.03, 3.08]}
+                  color={"blue"}
                   width={RADER_LENGTH}
                   height={RADER_LENGTH}
                   margin={RADER_MARGIN}
                 />
                 <RadarMark
-                  data={[3.13, 3.03, 3.24, 3.12, 3.03, 3.08]}
-                  color={"blue"}
+                  data={data}
+                  color={"orange"}
                   width={RADER_LENGTH}
                   height={RADER_LENGTH}
                   margin={RADER_MARGIN}
@@ -290,6 +296,35 @@ export default function Home() {
                   />
                 </ScaleSVG>
               </Box>
+
+              <Box>
+                <ScaleSVG width={AREA_WIDTH} height={AREA_HEIGHT}>
+                  <Text
+                    verticalAnchor="start"
+                    y={3}
+                    textAnchor="middle"
+                    x={AREA_WIDTH / 2}
+                    fontWeight="bold"
+                  >
+                    {VALUE[6]}
+                  </Text>
+                  <AreaAxis
+                    width={AREA_WIDTH}
+                    height={AREA_HEIGHT}
+                    margin={AREA_MARGIN}
+                    data={history.conventions}
+                    color={COLOR[5]}
+                  />
+                  <AreaMark
+                    width={AREA_WIDTH}
+                    height={AREA_HEIGHT}
+                    margin={AREA_MARGIN}
+                    data={average}
+                    color={COLOR[6]}
+                  />
+                </ScaleSVG>
+              </Box>
+
               <Center bgColor={"gray.100"}>
                 마우스 올리기랑 마우스 클릭을 해보세요 메롱
               </Center>

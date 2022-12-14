@@ -6,12 +6,13 @@ export const VALUE = [
   "Vocabulary",
   "Phraseology",
   "Grammer",
-  "Conventions"
+  "Conventions",
+  "Average"
 ];
 export const AREA_WIDTH = 350;
 export const AREA_HEIGHT = 220;
 export const AREA_MARGIN = {
-  top: 20,
+  top: 50,
   right: 20,
   bottom: 40,
   left: 30
