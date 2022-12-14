@@ -30,7 +30,9 @@ class Score(BaseModel):
 
 class Text(BaseModel):
     text:str
-    
+
+model = EnglishEssayModel.load_model()
+
 @app.get("/") 
 async def root(): 
     return {"message": "Hello World"} 
@@ -38,7 +40,7 @@ async def root():
 @app.post("/predict")
 async def get_scores(text:Text):
     #predict
-    result = EnglishEssayModel.predict(text.text)
+    result = EnglishEssayModel.predict(text.text, model)
     returnValue = {
         "result_id" : random.randint(10000000, 99999999),
         "full_text" : text,
