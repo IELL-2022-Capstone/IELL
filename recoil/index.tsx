@@ -20,7 +20,6 @@ export const dataState = atom<Instance>({
         conventions: 0,
     },
 });
-
 export const tooltipState = atom({
     key: "tooltipState",
     default: false,

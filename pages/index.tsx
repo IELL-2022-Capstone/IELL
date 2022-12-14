@@ -29,7 +29,9 @@ import {
     VALUE,
 } from "../config";
 import Text from "@visx/text/lib/Text";
-import { Instance, Scores } from "../types";
+import { getScores, Instance, Scores } from "../types";
+
+const mean = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length;
 
 export default function Home() {
     const [data, setData] = useRecoilState(dataState);
@@ -270,6 +272,37 @@ export default function Home() {
                                     />
                                 </ScaleSVG>
                             </Box>
+                            <Box>
+                                <ScaleSVG
+                                    width={AREA_WIDTH}
+                                    height={AREA_HEIGHT}
+                                >
+                                    <Text
+                                        verticalAnchor="start"
+                                        y={3}
+                                        textAnchor="middle"
+                                        x={AREA_WIDTH / 2}
+                                        fontWeight="bold"
+                                    >
+                                        Average
+                                    </Text>
+                                    <AreaAxis
+                                        width={AREA_WIDTH}
+                                        height={AREA_HEIGHT}
+                                        margin={AREA_MARGIN}
+                                        data={history.map((d) => mean(getScores(d)))}
+                                        color={COLOR[6]}
+                                    />
+                                    <AreaMark
+                                        width={AREA_WIDTH}
+                                        height={AREA_HEIGHT}
+                                        margin={AREA_MARGIN}
+                                        data={history.map((d) => mean(getScores(d)))}
+                                        color={COLOR[6]}
+                                    />
+                                </ScaleSVG>
+                            </Box>
+
                             <Center bgColor={"gray.100"}>
                                 마우스 올리기랑 마우스 클릭을 해보세요 메롱
                             </Center>
