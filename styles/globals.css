@@ -5,19 +5,3 @@ body {
   padding: 0;
   margin: 0;
 }
-
-.wrapper {
-  display: grid;
-  grid-template-areas:
-    "i r"
-    ". h";
-}
-#inputbox {
-  grid-area: "i";
-}
-#rader {
-  grid-area: "r";
-}
-#history {
-  grid-area: "h";
-}

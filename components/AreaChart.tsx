@@ -1,21 +1,22 @@
+import { Tooltip } from "@chakra-ui/react";
 import { AxisBottom, AxisLeft } from "@visx/axis";
 import { curveNatural } from "@visx/curve";
 import { LinearGradient } from "@visx/gradient";
 import { scaleLinear } from "@visx/scale";
 import { AreaClosed, Circle, Line, LinePath } from "@visx/shape";
-import { LEVEL } from "../config";
-import { ChartProps, LineProps } from "../types";
-import { Tooltip } from "@chakra-ui/react";
 import { useRecoilState } from "recoil";
+import { LEVEL } from "../config";
 import {
   currentIdState,
   historyState,
   tooltipState,
   valueState
 } from "../recoil/index";
+import { ChartProps, LineProps } from "../types";
 
 export const AreaAxis = (props: ChartProps & LineProps) => {
   const { width, height, margin, data } = props;
+  console.log(data)
 
   const xScale = scaleLinear({
     domain: [0, data.length - 1],
@@ -61,18 +62,11 @@ export const AreaMark = (props: ChartProps & LineProps) => {
   const { data, width, height, margin, color } = props;
 
   const handleOnclick = (i: number, x: number, y: number, d: number) => {
-    console.log(i, x, y, d);
     setValue(history.text[i]);
   };
   const handleOnMouseOver = (id: number) => {
     setTooltipOver(true);
     setCurrentId(id);
-    console.log(
-      yScale(data[currentId]),
-      yScale(5 - data[currentId]),
-      margin.top,
-      margin.bottom
-    );
   };
 
   const handleOnMouseLeave = () => {
@@ -98,7 +92,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
         id={`area-gradien-${color}`}
         from={color}
         to={color}
-        fromOpacity={1}
+        fromOpacity={0.6}
         toOpacity={0}
       />
       <AreaClosed
@@ -138,6 +132,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
       {data.map((d, i) => {
         const x = (xScale(i) ?? 0) + margin.left;
         const y = (yScale(d) ?? 0) + margin.top;
+        console.log(d)
 
         return (
           <Tooltip key={`line-point-${i}`} label={`${d}`} placement="top">
