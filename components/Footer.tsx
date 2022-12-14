@@ -1,4 +1,4 @@
-import { Center, Flex, Stack, Text } from "@chakra-ui/react";
+import { Center, Stack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
 export const Footer = () => (
@@ -8,7 +8,7 @@ export const Footer = () => (
         px={4}
         py={4}
         position="relative"
-        backgroundColor="white"
+        backgroundColor={"gray.50"}
         boxShadow="xs"
     >
         <Stack

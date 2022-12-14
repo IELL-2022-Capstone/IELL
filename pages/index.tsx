@@ -3,9 +3,7 @@ import {
   Center,
   Container,
   Grid,
-  GridItem,
-  Heading,
-  SimpleGrid,
+  GridItem, SimpleGrid
 } from "@chakra-ui/react";
 import { Group } from "@visx/group";
 import { ScaleSVG } from "@visx/responsive";
@@ -25,15 +23,13 @@ import {
   RADAR_HEIGHT,
   RADAR_WIDTH,
   RADER_MARGIN,
-  VALUE,
+  VALUE
 } from "../config";
 import {
   dataState,
-  historyState,
-  inputState,
-  valueState,
+  historyState
 } from "../recoil/index";
-import { Attribute, getScores, History, Instance } from "../types";
+import { Attribute, getScores, History } from "../types";
 
 const mean = (arr: number[]) => arr.reduce((a, b) => a + b) / arr.length;
 
@@ -45,6 +41,7 @@ function HistoryAreaChart(history: History, attribute: Attribute) {
           textAnchor="middle"
           x={AREA_WIDTH / 2}
           y={3}
+          fill="gray"
           verticalAnchor="start"
           fontWeight="bold"
         >
@@ -83,24 +80,16 @@ export default function Home() {
 
   return (
     <>
-      
+
       <Container maxW="container.xl" pt="20" pb="5">
         <Grid
-          templateRows="repeat(2,1fr)"
-          templateColumns={"repeat(2,1fr)"}
+          templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }}
           gap={4}
         >
           <GridItem w={"full"}>
-            <Heading size="lg" mb={4}>
-              English
-            </Heading>
             <InputBox />
           </GridItem>
           <GridItem w={"full"}>
-            <Heading size="lg" mb={4}>
-              Score
-            </Heading>
-
             <ScaleSVG width={RADAR_WIDTH} height={RADAR_HEIGHT}>
               <Group
                 top={RADAR_HEIGHT / 2}
@@ -128,11 +117,8 @@ export default function Home() {
               </Group>
             </ScaleSVG>
           </GridItem>
-          <GridItem colSpan={4} w="full">
-            <Heading size="lg" mb={4}>
-              History
-            </Heading>
-            <SimpleGrid w="full" columns={4} spacing={4}>
+          <GridItem colSpan={{ base: 1, md: 2 }} w="full">
+            <SimpleGrid w="full" minChildWidth={{ base: 150, md: 240 }} spacing={4}>
               {VALUE.map((v) => HistoryAreaChart(history, v))}
 
               <Center bgColor={"gray.100"} m={5} borderRadius={10} p={5}>

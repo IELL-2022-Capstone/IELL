@@ -11,7 +11,7 @@ export const Header = () => {
             px={4}
             position={"fixed"}
             top={0}
-            backgroundColor="white"
+            backgroundColor={"gray.50"}
             boxShadow={"xs"}
         >
             <Stack

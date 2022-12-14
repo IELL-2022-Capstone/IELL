@@ -1,10 +1,9 @@
-import { scaleLinear } from "@visx/scale";
 import { Point } from "@visx/point";
+import { scaleLinear } from "@visx/scale";
 import { Line, LineRadial } from "@visx/shape";
-import { Group } from "@visx/group";
-import { ChartProps, getScores, LineProps, RadarProps } from "../types";
-import { DATA_LENGTH, LEVEL, VALUE } from "../config";
 import { Text } from "@visx/text";
+import { DATA_LENGTH, LEVEL, VALUE } from "../config";
+import { ChartProps, getScores, RadarProps } from "../types";
 
 const genAngles = (length: number) =>
     [...new Array(length + 1)].map((_, i) => ({
@@ -91,7 +90,7 @@ export const RadarAxis = (props: ChartProps) => {
                     }
                     verticalAnchor="middle"
                     fill="gray"
-                    
+                    fontWeight="bold"
                 >
                     {VALUE[i][0].toUpperCase() + VALUE[i].slice(1)}
                 </Text>
@@ -129,7 +128,7 @@ export const RadarMark = (props: ChartProps & RadarProps) => {
                     key={`radar-point-${i}`}
                     cx={point.x}
                     cy={point.y}
-                    r={4}
+                    r={3}
                     fill={color}
                 />
             ))}
