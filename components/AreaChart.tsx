@@ -68,32 +68,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
     setTooltipOver(true);
     setCurrentId(id);
   };
-  // const {
-  //   tooltipData,
-  //   tooltipLeft = 0,
-  //   tooltipTop = 0,
-  //   showTooltip,
-  //   hideTooltip
-  // } = useTooltip();
 
-  // const handleTooltip = useCallback((data) => {
-  //   // const { x } = localPoint(event) || { x: 0 };
-  //   // const x0 = timeScale.invert(x - margin.left); // get Date from the scale
-
-  //   // const index = bisectDate(data, x0, 1);
-  //   // const d0 = data[index - 1];
-  //   // const d1 = data[index];
-  //   // let d = d0;
-
-  //   // if (d1 && getDate(d1)) {
-  //   //   d =
-  //   //     x0.valueOf() - getDate(d0).valueOf() >
-  //   //     getDate(d1).valueOf() - x0.valueOf()
-  //   //       ? d1
-  //   //       : d0;
-  //   // }
-
-  // });
   const handleOnMouseLeave = () => {
     setTooltipOver(false);
     setCurrentId(-1);
@@ -111,12 +86,6 @@ export const AreaMark = (props: ChartProps & LineProps) => {
     nice: true
   });
 
-  // const tooltipStyles = {
-  //   ...defaultStyles,
-  //   minWidth: 60,
-  //   backgroundColor: "rgba(0,0,0,0.9)",
-  //   color: "white"
-  // };
   return (
     <>
       <LinearGradient
