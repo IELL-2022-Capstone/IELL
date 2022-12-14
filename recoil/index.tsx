@@ -26,9 +26,7 @@ export const historyState = atom({
 
 export const tooltipState = atom({
   key: "tooltipState",
-  default: {
-    cohesion: []
-  }
+  default: false
 });
 
 export const inputState = atom({
@@ -39,4 +37,9 @@ export const inputState = atom({
 export const valueState = atom({
   key: "valueState",
   default: ""
+});
+
+export const currentIdState = atom({
+  key: "currentIdState",
+  default: -1
 });

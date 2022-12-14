@@ -164,28 +164,6 @@ export default function Home() {
                   data={history.cohesion}
                   color={COLOR[0]}
                 />
-                {/* {tooltipOver && (
-                  <g>
-                    <Line
-                      from={{ x: tooltipLeft - margin.left, y: 0 }}
-                      to={{ x: tooltipLeft - margin.left, y: innerHeight }}
-                      stroke={"#EDF2F7"}
-                      strokeWidth={2}
-                      pointerEvents="none"
-                      strokeDasharray="4,2"
-                    />
-                  </g>
-                )}
-                <rect
-                  x={0}
-                  y={0}
-                  width={innerWidth}
-                  height={innerHeight}
-                  fill={"transparent"}
-                  onClick={handleTooltip}
-                  onMouseMove={handleTooltip}
-                  onMouseLeave={() => hideTooltip()}
-                /> */}
               </svg>
               {/* {tooltipOver ? (
                 <TooltipWithBounds
