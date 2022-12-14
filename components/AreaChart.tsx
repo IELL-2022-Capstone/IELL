@@ -151,6 +151,7 @@ export const AreaMark = (props: ChartProps & LineProps) => {
             opacity={i === currentId && tooltipOver ? 1 : 0}
             onMouseOver={() => handleOnMouseOver(i)}
             onMouseLeave={() => handleOnMouseLeave()}
+            onClick={() => handleOnclick(i)}
           />
           <Bar
             key={`tooltip${i}`}
