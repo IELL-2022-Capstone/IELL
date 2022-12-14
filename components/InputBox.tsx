@@ -14,6 +14,10 @@ export default function InputBox() {
     // console.log("onclick", ref.current.value);
     setInput(ref.current.value);
   };
+  const handleOnChange = () => {
+    // console.log("onclick", ref.current.value);
+    setValue(ref.current.value);
+  };
 
   return (
     <InputGroup size="md">
@@ -23,6 +27,7 @@ export default function InputBox() {
         placeholder="Basic usage"
         w={500}
         h={260}
+        onChange={handleOnChange}
       />
       <InputRightElement width="4.5rem" display="flex" alignItems="center">
         <Button

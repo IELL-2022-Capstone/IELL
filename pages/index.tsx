@@ -61,7 +61,7 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       if (input) {
-        // console.log("text", input);
+        console.log("text", input);
         const text = {
           text: input
         };
